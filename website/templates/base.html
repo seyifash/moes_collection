@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles/login.css">
+    <title>{% block title %}Moes Collection{% endblock %}</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fa fa-bars"></i>
+        </label>
+        <label class="logo"><i>M</i>o<i>ES</i> <i>C</i>o<i>ll</i>ectio<i>N</i></label>
+        <ul>
+            <li><a class="active" href="/">Home</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/sign-up">Sign-up</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'error' %}
+    <div class="the-alert-danger">
+        {{ message }}
+        <button type="button" class="close-btn" data-dismiss="alert">
+            <span aria-hidden="true" class="the_alert">&times;</span>
+        </button>
+    </div>
+    {% else %}
+    <div class="the-alert-success">
+        {{ message }}
+        <button type="button" class="close-btn" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <section class="the-img">{% block content %}
+        {% endblock %}</section>
+</body>
+</html>
