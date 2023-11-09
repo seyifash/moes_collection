@@ -111,30 +111,37 @@ label {
 .the-alert-danger {
     padding: 10px;
     background-color:  #f7c1a6;
-    font-size: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: rgb(6, 6, 24);
-    display: flex;
-    justify-content: space-between;
+    opacity: 1;
+    transition: opacity 0.6s;
 }
-span {
+.danger-btn {
     color: rgb(161, 0, 0);
     background-color: #f7c1a6;
     border: none; 
-    font-size: 16px;
+    font-size: 25px;
+    float: right;
+    cursor: pointer;
+    transition: 0.3s;
+
 }
 .the-alert-success {
     background-color: rgb(200, 236, 200);
     padding: 10px;
-    display: flex;
-    justify-content: space-between;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(1, 36, 1);
+    opacity: 1;
+    transition: opacity 0.6s;
 }
-span  {
-    color:  rgb(3, 24, 3);
-    background-color:  rgb(212, 238, 212);
+.close-btn {
+    color: rgb(1, 36, 1);
+    background-color: rgb(200, 236, 200);
     border: none; 
-    font-size: 16px;
+    font-size: 25px;
+    float: right;
 }
+
 @media (max-width: 952px) {
     label.logo{
         font-size: 30px;

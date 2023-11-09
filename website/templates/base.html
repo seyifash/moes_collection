@@ -7,8 +7,10 @@
     <title>{% block title %}Moes Collection{% endblock %}</title>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="../scripts/1-web.js"></script>
 </head>
-<body>
+    <body>
     <nav>
         <input type="checkbox" id="check">
         <label for="check" class="checkbtn">
@@ -28,7 +30,7 @@
     {% if category == 'error' %}
     <div class="the-alert-danger">
         {{ message }}
-        <button type="button" class="close-btn" data-dismiss="alert">
+        <button type="button" class="danger-btn" data-dismiss="alert">
             <span aria-hidden="true" class="the_alert">&times;</span>
         </button>
     </div>
@@ -36,7 +38,7 @@
     <div class="the-alert-success">
         {{ message }}
         <button type="button" class="close-btn" data-dismiss="alert">
-            <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true" class="the-alert">&times;</span>
         </button>
     </div>
     {% endif %}
