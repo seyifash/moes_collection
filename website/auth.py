@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from models.user import User
 
 auth = Blueprint('auth', __name__)
 
@@ -30,5 +31,10 @@ def sign_up():
         elif len(password) < 4:
             flash('Passwords must be at least 4 characters', category='error')
         else:
+            new_user = request.form.to_dict()
+            new_user.pop('password2')
+            created_user = User(**new_user)
+            created_user.save()
             flash('Account created!', category='success')
+            return redirect(url_for('views.mainViews'))
     return render_template("signup.html")
