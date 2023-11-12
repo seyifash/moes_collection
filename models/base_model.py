@@ -1,8 +1,8 @@
 from datetime import datetime
+import models
 from sqlalchemy import Column, String, Integer, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
-from models import storage
 
 
 time = "%y-%m-%dT%H:%M:%S.%f"
@@ -39,8 +39,8 @@ class BaseModel:
     def save(self):
         """updates the newly created object time then crates it a new object and saves to th database"""
         self.updated_at = datetime.utcnow()
-        storage.new(self)
-        storage.save()
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         # returns a dictionary representation of the instance 
@@ -56,4 +56,4 @@ class BaseModel:
     
     def delete(self):
         """deletes current instance from storage"""
-        storage.delete(self)
+        models.storage.delete(self)
