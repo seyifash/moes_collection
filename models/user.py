@@ -1,6 +1,7 @@
 from models.base_model import BaseModel, Base
 from hashlib import md5
 from sqlalchemy import String, Column
+from hashlib import md5
 
 
 class User(BaseModel, Base):
@@ -14,6 +15,7 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
+<<<<<<< HEAD
     
     def __setattr__(self, name, value):
         """ sets a password with md5 encryption"""
@@ -21,3 +23,11 @@ class User(BaseModel, Base):
             value = md5(value.encode()).hexdigest()
         super().__setattr__(name, value)
     
+=======
+
+    def __setattr__(self, name, value):
+        """sets a password with md5 encryption"""
+        if name == "password":
+            value = md5(value.encode()).hexdigest()
+        super().__setattr__(name, value)
+>>>>>>> master

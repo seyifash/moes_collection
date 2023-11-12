@@ -1,6 +1,7 @@
-from models.base_model import Base
+from models.base_model import BaseModel, Base
 from models.user import User
-from sqlalchemy import (create_engine)
+import sqlalchemy
+from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm.session import sessionmaker
 
@@ -29,7 +30,6 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
-    
     
     def new(self, obj):
         """new objects are created and added """
