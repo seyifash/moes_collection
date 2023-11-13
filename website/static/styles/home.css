@@ -13,6 +13,7 @@
     font-family: myFont3;
     src: url(tasteful/Taste-s.otf);
 }
+
 body {
         background: white;
         font-family: myFont;
@@ -22,6 +23,9 @@ nav {
     height: 65px;
     background-color: white;
     border-bottom: 1px solid rgb(217, 209, 209);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
 }
 label.logo {
     line-height: 65px;
@@ -54,7 +58,7 @@ a.active,a:hover {
 }
 .checkbtn {
     font-size: 30px;
-    color: black;
+    color:black;
     float: right;
     line-height: 65px;
     margin-right: 40px;
@@ -64,107 +68,53 @@ a.active,a:hover {
 #check {
     display: none;
 }
-section {
-    margin: 0;
-    padding: 0;
+.the-img-sec {
     width: 100%;
-    height: 100vh;
-    background: url('../images/hairpics11.jpg')  no-repeat;
-    background-size: cover;
+    display: block;
+    position: relative;
+}
+.the-nav {
+    width: 100%;
+    margin-top: 65px;
+    background-color: rgb(245, 245, 245);
+    height: 40px;
     display: flex;
-    flex-direction: column; 
-    align-items: center; 
+    align-items: center;
+    padding-left: 40px;
 }
-.our-section {
+.the-nav span {
+    font-size: 22px;
+    text-align: center;
+}
+.our-div {
+    margin: 0;
     width: 100%;
-    height: 50%;
 }
-div.content-div {
+.back-style {
+    width: 100%;
+    height: 600px;
+}
+.content-absolute {
+    position: absolute;
+    font-size: 100px;
+    top: 60%;
+    left: 25%;
+    font-family: myFont3;
+    color: white;
+}
+.my-button {
+    display: flex;
+    border: 1px solid grey;
+    background-color: white;
     border-radius: 7px;
-    background-color: white; 
-    opacity: 0.6; 
-}
-input {
-    background-color: black;
-    color: white;
-}
-div.em-cont {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    padding: 30px;
-    padding-bottom: 10px;
-    padding-top: 20px;
-
-}
-label, h3 {
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
     color: black;
-    padding-bottom: 5px;
-    font-family: myFont;
-    font-size: 30px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
 }
-h3 {
-    margin-top: 10px;
-    color: white;
-}
-label {
-    font-size: 20px;
-    font-family: myFont;
-}
-.the-control {
-    width: 300px;
-    height: 30px;
-    border-radius: 4px;
-    border: none;
-    padding-left: 12px;
-}
-.primary-btn {
-    padding: 0;
-    margin: 0;
-    margin-left: 30px;
-    padding: 10px 17px;
-    border-radius: 4px;
-    border: none;
-    background-color: orange;
-    color: white;
-    margin-bottom: 10px;
-}
-.the-alert-danger {
-    padding: 10px;
-    background-color:  #f7c1a6;
-    font-family: myFont;
-    color: rgb(6, 6, 24);
-    opacity: 1;
-    transition: opacity 0.6s;
-    font-size: 20px;
-}
-.danger-btn {
-    color: rgb(161, 0, 0);
-    background-color: #f7c1a6;
-    border: none; 
-    font-size: 20px;
-    float: right;
-    cursor: pointer;
-    transition: 0.3s;
-
-}
-.the-alert-success {
-    background-color: rgb(200, 236, 200);
-    padding: 10px;
-    font-family: myFont;
-    color: rgb(1, 36, 1);
-    opacity: 1;
-    transition: opacity 0.6s;
-}
-.close-btn {
-    color: rgb(1, 36, 1);
-    background-color: rgb(200, 236, 200);
-    border: none; 
-    font-size: 23px;
-    float: right;
-}
-
 @media (max-width: 952px) {
     label.logo{
         font-size: 30px;
@@ -183,7 +133,7 @@ label {
         width: 50%;
         height: 50vh;
         background: white;
-        top: 80px;
+        top: 66px;
         left: -100%;
         text-align: center;
         transition: all .5s;
@@ -193,6 +143,7 @@ label {
         display: block;
         margin: 50px 0;
         line-height: 30px;
+        
     }
     nav ul li a {
         font-size: 20px;
@@ -204,10 +155,12 @@ label {
     #check:checked ~ ul{
         left: 0;
     }
-    section {
-        background: url(../images/hairpics11.jpg) no-repeat;
-        background-size: cover;
-        height: calc(100vh - 80px);
-        z-index: 0;
+    .the-img-sec {
+        position: relative; 
+        z-index: 0; 
     }
+    .content-absolute {
+        font-size: 50px;
+    }    
 }
+

@@ -1,11 +1,21 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from models.user import User
+from models import storage
 
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        existingUser = storage.get(User, email)
+        if existingUser:
+            if password == existingUser.password:
+                flash('Logged in sucessfully', category='success')
+            else:
+                flash('Incorrect password, try again', category='error')       
     return render_template("login.html")
 
 @auth.route('/logout')

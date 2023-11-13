@@ -51,4 +51,9 @@ class DBStorage:
     def close(self):
         """removes a session"""
         self.__session.remove()
-        
+    
+    def get(self, cls, email):
+        if cls:
+            if cls in classes.values():
+                return self.__session.query(cls).get(email)
+            return None
