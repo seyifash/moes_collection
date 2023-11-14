@@ -10,7 +10,8 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        existingUser = storage.get(User, email)
+        existingUser = storage.get_by_email(User, email)
+        print(existingUser)
         if existingUser:
             if password == existingUser.password:
                 flash('Logged in sucessfully', category='success')
