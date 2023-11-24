@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from models.user import User
 from models import storage
+from hashlib import md5
 
 
 auth = Blueprint('auth', __name__)
@@ -10,18 +11,20 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
+        password2 = md5(password.encode()).hexdigest()
         existingUser = storage.get_by_email(User, email)
-        print(existingUser)
         if existingUser:
-            if password == existingUser.password:
-                flash('Logged in sucessfully', category='success')
+            if password2 == existingUser.password:
+                return redirect(url_for('views.mainViews'))
             else:
-                flash('Incorrect password, try again', category='error')       
+                flash('Incorrect password, try again', category='error') 
+        else:
+            flash('Email does not exist', category='error')      
     return render_template("login.html")
 
 @auth.route('/logout')
 def logout():
-    return render_template("logout.html")
+    return redirect(url_for('auth.login'))
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
@@ -32,7 +35,10 @@ def sign_up():
         password = request.form.get('password')
         password2 = request.form.get('password2')
         
-        if len(email) < 4:
+        existingUser = storage.get_by_email(User, email)
+        if existingUser:
+            flash('Email already exists.', category='error')
+        elif len(email) < 4:
             flash('Email must be greater than 3 characters', category='error')
         elif len(first_name) < 3:
             flash('First name must be greater than 2 characters', category='error') 

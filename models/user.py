@@ -1,7 +1,7 @@
 from models.base_model import BaseModel, Base
 from hashlib import md5
 from sqlalchemy import String, Column
-from hashlib import md5
+
 
 
 class User(BaseModel, Base):
