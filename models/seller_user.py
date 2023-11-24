@@ -12,6 +12,7 @@ class Seller(BaseModel, Base):
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128), nullable=False)
     products = relationship('Product', back_populates='seller')
+
     
     def __init__(self, *args, **kwargs):
         """initializes user"""

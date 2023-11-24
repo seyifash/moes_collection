@@ -22,7 +22,7 @@
         </ul>
     </nav>
     <section class="the-img">
-<form id="uploadForm" enctype="multipart/form-data" action="/upload" method="POST">
+    <form id="uploadForm" enctype="multipart/form-data" method="POST"  action="{{ url_for('seller_views.sellerViews') }}">
     <div class="em-cont">
     <label for="productName">Product Name:</label>
     <input 
