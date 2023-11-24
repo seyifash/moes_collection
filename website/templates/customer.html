@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles/customer.css">
+    <title>{% block title %}Moes Collection/sign-up{% endblock %}</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="../static/scripts/1-web.js"></script>
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fa fa-bars"></i>
+        </label>
+        <label class="logo"><i>M</i>o<i>ES</i> <i>C</i>o<i>ll</i>ectio<i>N</i></label>
+        <ul>
+            <li><a class="active" href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <section class="the-img">
+<form id="uploadForm" enctype="multipart/form-data" action="/upload" method="POST">
+    <div class="em-cont">
+    <label for="productName">Product Name:</label>
+    <input 
+    type="text" 
+    id="productName"
+    name="productName" 
+    class="the-control"
+    />
+    </div>
+
+    <div class="em-cont">
+    <label for="productPrice">Product Price:</label>
+    <input 
+        type="number" 
+        id="productPrice" 
+        name="productPrice" 
+        class="the-control" 
+    />
+    </div>
+
+    <div class="em-cont">
+    <label for="productQuantity">Product Gram:</label>
+    <input 
+        type="number"
+        id="productQuantity" 
+        name="productQuantity" 
+        class="the-control" 
+     />
+    </div>
+
+    <div class="em-cont">
+    <label for="productInches">Product Inches:</label>
+    <input 
+     type="number"
+     id="productInches" 
+     class="the-control"
+     name="productInches" 
+     />
+    </div>
+
+    <div class="em-cont">
+    <label for="productColor">Product Color:</label>
+    <input type="text"
+     id="productColor"
+     name="productColor" 
+     class="the-control"
+    />
+    </div>
+
+    <div class="em-cont">
+    <label for="productImage">Product Image:</label>
+    <input type="file" 
+    id="productImage" 
+    name="productImage" 
+    accept="image/*" 
+    class="the-control"
+    />
+    </div>
+
+    <button type="submit" class="primary-btn">Upload Product</button>
+</form>
+</section>
+</body>
+</html>

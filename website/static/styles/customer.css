@@ -1,0 +1,210 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+@font-face{
+    font-family: myFont;
+    src: url(quesha/Quesha.ttf);
+}
+@font-face{
+    font-family: myFont3;
+    src: url(tasteful/Taste-s.otf);
+}
+body {
+        background: white;
+        font-family: myFont;
+}
+nav {
+    width: 100%;
+    height: 65px;
+    background-color: white;
+    border-bottom: 1px solid rgb(217, 209, 209);
+}
+label.logo {
+    line-height: 65px;
+    font-size: 50px;
+    color: black;
+    padding: 0 20px;
+    font-weight: medium;
+    font-family: myFont3;
+}
+nav ul {
+    float: right;
+    margin-right: 20px;
+}
+nav ul li {
+    display: inline-block;
+    line-height: 65px;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: black;
+    font-size: 20px;
+    border-radius: 3px;
+    padding: 7px 13px;
+    text-transform: uppercase;
+}
+a.active,a:hover {
+    background: orange;
+    transition: .5s;
+}
+.checkbtn {
+    font-size: 30px;
+    color: black;
+    float: right;
+    line-height: 65px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+#check {
+    display: none;
+}
+section {
+    width: 100%;
+    height: 100vh;
+    background: url('../images/hairpics11.jpg')  no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+.our-section {
+    width: 100%;
+    height: 50%;
+}
+div.content-div {
+    border-radius: 7px;
+    background-color: white; 
+    opacity: 0.6; 
+}
+input {
+    background-color: white;
+    color: black;
+}
+div.em-cont {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    padding: 30px;
+    padding-bottom: 10px;
+    padding-top: 20px;
+}
+label, h3 {
+    color: black;
+    padding-bottom: 5px;
+    font-family: myFont;
+    font-size: 30px;
+}
+h3 {
+    margin-top: 20px;
+    color: white;
+}
+label {
+    font-size: 30px;
+}
+.the-control {
+    width: 300px;
+    height: 30px;
+    border-radius: 4px;
+    border: none;
+    padding-left: 12px;
+    background-color: white;
+}
+.primary-btn {
+    padding: 0;
+    margin: 0;
+    margin-left: 30px;
+    padding: 10px 17px;
+    border-radius: 4px;
+    border: none;
+    background-color: orange;
+    color: white;
+    margin-bottom: 10px;
+}
+.the-alert-danger {
+    padding: 10px;
+    background-color:  #f7c1a6;
+    font-family: myFont;
+    color: rgb(6, 6, 24);
+    opacity: 1;
+    transition: opacity 0.6s;
+    font-size: 20px;
+}
+.danger-btn {
+    color: rgb(161, 0, 0);
+    background-color: #f7c1a6;
+    border: none; 
+    font-size: 20px;
+    float: right;
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+.the-alert-success {
+    background-color: rgb(200, 236, 200);
+    padding: 10px;
+    font-family: myFont;
+    color: rgb(1, 36, 1);
+    opacity: 1;
+    transition: opacity 0.6s;
+}
+.close-btn {
+    color: rgb(1, 36, 1);
+    background-color: rgb(200, 236, 200);
+    border: none; 
+    font-size: 23px;
+    float: right;
+}
+
+@media (max-width: 952px) {
+    label.logo{
+        font-size: 30px;
+        padding-left: 50px;
+    }
+    nav ul li a {
+        font-size: 16px;
+    }
+}
+@media (max-width: 858px){
+    .checkbtn{
+        display:block;
+    }
+    ul {
+        position: absolute;
+        width: 50%;
+        height: 50vh;
+        background: white;
+        top: 80px;
+        left: -100%;
+        text-align: center;
+        transition: all .5s;
+        z-index: 1;
+    }
+    nav ul li{
+        display: block;
+        margin: 50px 0;
+        line-height: 30px;
+    }
+    nav ul li a {
+        font-size: 20px;
+    }
+    a:hover,a.active{
+        background: orange;
+        color: black;
+    }
+    #check:checked ~ ul{
+        left: 0;
+    }
+    section {
+        background: white;
+        background-size: cover;
+        height: calc(100vh - 80px);
+        z-index: 0;
+    }
+}
