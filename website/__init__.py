@@ -1,4 +1,8 @@
 from flask import Flask
+from models import storage
+from flask_login import LoginManager
+from models.seller_user import Seller
+
 
 def create_app():
     app = Flask(__name__)
@@ -13,5 +17,13 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(seller_auth, url_prefix='/')
     app.register_blueprint(seller_views, url_prefix='/')
+    
+    login_manager = LoginManager()
+    login_manager.login_view = 'seller_auth.seller_login'
+    login_manager.init_app(app)
+    
+    @login_manager.user_loader
+    def load_user(id):
+        return storage.get_user_by_id(Seller, id)
     
     return app

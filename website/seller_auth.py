@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask_login import current_user, login_user, logout_user, login_required
 from models.seller_user import Seller
 from models import storage
 from hashlib import md5
@@ -15,6 +16,7 @@ def seller_login():
         existingUser = storage.get_by_email(Seller, email)
         if existingUser:
             if password2 == existingUser.password:
+                login_user(existingUser)
                 return redirect(url_for('seller_views.sellerViews'))
             else:
                 flash('Incorrect password, try again', category='error') 
@@ -23,7 +25,9 @@ def seller_login():
     return render_template("seller_login.html")
 
 @seller_auth.route('/seller_logout')
+@login_required
 def logout():
+    logout_user()
     return redirect(url_for('seller_auth.seller_login'))
 
 @seller_auth.route('/seller_sign-up', methods=['GET', 'POST'])
@@ -53,5 +57,6 @@ def sign_up():
             new_user.pop('password2')
             created_user = Seller(**new_user)
             created_user.save()
+            login_user(new_user) 
             return redirect(url_for('seller_views.sellerViews'))
     return render_template("seller_signup.html")

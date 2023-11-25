@@ -13,4 +13,3 @@ class Product(BaseModel, Base):
     productColor = Column(String(50), nullable=False)
     productImage = Column(String(255), nullable=False)
     seller_id = Column(String(60), ForeignKey('seller.id'), nullable=False)
-    seller = relationship('Seller', back_populates='products')

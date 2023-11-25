@@ -59,3 +59,9 @@ class DBStorage:
             if cls in classes.values():
                 return self.__session.query(cls).filter_by(email=email).first()
             return None
+        
+    def get_user_by_id(self, cls, user_id):
+        """Get a user by ID."""
+        if cls and cls in classes.values():
+            return self.__session.query(cls).get(user_id )
+        return None

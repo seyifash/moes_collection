@@ -1,17 +1,18 @@
 from models.base_model import BaseModel, Base
+from flask_login import UserMixin
 from hashlib import md5
 from sqlalchemy import String, Column
 from sqlalchemy.orm import relationship
 
 
-class Seller(BaseModel, Base):
+class Seller(BaseModel, Base, UserMixin):
     """creates a new seller"""
     __tablename__ = 'seller'
     email = Column(String(128), nullable=False, unique=True)
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128), nullable=False)
-    products = relationship('Product', back_populates='seller')
+    products = relationship('Product', backref='seller')
 
     
     def __init__(self, *args, **kwargs):
