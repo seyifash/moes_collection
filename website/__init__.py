@@ -7,6 +7,7 @@ from models.seller_user import Seller
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'Ayomide'
+    app.config['UPLOAD_FOLDER'] = r'website\static\uploads'
     
     from .views import views
     from .auth import auth
