@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from models import storage
 
 views = Blueprint('views', __name__)
 
@@ -9,4 +10,5 @@ def home():
 
 @views.route('/main_views')
 def mainViews():
-    return render_template("views.html")
+    products = storage.all("Product")
+    return render_template("views.html", products=products)

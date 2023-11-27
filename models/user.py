@@ -1,10 +1,11 @@
 from models.base_model import BaseModel, Base
+from flask_login import UserMixin
 from hashlib import md5
 from sqlalchemy import String, Column
 
 
 
-class User(BaseModel, Base):
+class User(BaseModel, Base, UserMixin):
     """creates a new user"""
     __tablename__ = 'users'
     email = Column(String(128), nullable=False, unique=True)

@@ -57,6 +57,6 @@ def sign_up():
             new_user.pop('password2')
             created_user = Seller(**new_user)
             created_user.save()
-            login_user(new_user) 
+            login_user(created_user) 
             return redirect(url_for('seller_views.sellerViews'))
     return render_template("seller_signup.html")

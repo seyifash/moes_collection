@@ -2,6 +2,7 @@ from flask import Flask
 from models import storage
 from flask_login import LoginManager
 from models.seller_user import Seller
+from models.user import User
 
 
 def create_app():
@@ -21,10 +22,17 @@ def create_app():
     
     login_manager = LoginManager()
     login_manager.login_view = 'seller_auth.seller_login'
+    login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
     
     @login_manager.user_loader
     def load_user(id):
-        return storage.get_user_by_id(Seller, id)
+        user_classes = [Seller, User]  # Add more classes as needed
+
+        for user_class in user_classes:
+            user = storage.get_user_by_id(user_class, id)
+            if user:
+                return user
+        return None
     
     return app

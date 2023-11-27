@@ -13,6 +13,10 @@
     font-family: myFont2;
     src: url(Union-Font/Union-Regular.ttf);
 }
+@font-face{
+    font-family: myFont3;
+    src: url(tasteful/Taste-s.otf);
+}
 body {
         background: white;
         position: relative;
@@ -28,10 +32,11 @@ nav {
 }
 label.logo {
     line-height: 70px;
-    font-size: 35px;
+    font-size: 50px;
     color: black;
     padding: 0 20px;
     font-weight: medium;
+    font-family: myFont3
 }
 nav ul {
     float: right;

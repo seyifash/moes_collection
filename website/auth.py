@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask_login import current_user, login_user, logout_user, login_required
 from models.user import User
 from models import storage
 from hashlib import md5
@@ -15,6 +16,7 @@ def login():
         existingUser = storage.get_by_email(User, email)
         if existingUser:
             if password2 == existingUser.password:
+                login_user(existingUser)
                 return redirect(url_for('views.mainViews'))
             else:
                 flash('Incorrect password, try again', category='error') 
@@ -23,7 +25,9 @@ def login():
     return render_template("login.html")
 
 @auth.route('/logout')
+@login_required
 def logout():
+    logout_user()
     return redirect(url_for('auth.login'))
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
@@ -54,5 +58,6 @@ def sign_up():
             created_user = User(**new_user)
             created_user.save()
             flash('Account created!', category='success')
+            login_user(created_user) 
             return redirect(url_for('views.mainViews'))
     return render_template("signup.html")
