@@ -115,14 +115,26 @@ a.active,a:hover {
 .overall {
     display: block;
 }
-
+.name_price {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    align-items: center;
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+.price_name {
+    margin-right: 100px;
+    font-weight: bold;
+}
 .the_links {
     display: flex;
     margin: 0;
     padding: 0;
     margin-left: 6px;
     align-items: center;
-    color: rgb(190, 189, 189); 
+    color: rgb(167, 167, 167); 
 }
 .the_ref {
     padding: 6px;
@@ -147,6 +159,7 @@ a.active,a:hover {
     justify-content: center;
     align-items: center;
     margin-bottom: 11px;
+    cursor: pointer;
 }
 .chart {
     border: none;
