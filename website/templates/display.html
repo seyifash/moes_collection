@@ -22,7 +22,46 @@
         </ul>
     </nav>
         <div id="capturedContent" class="all-div">
+            <div class="carry_all">
             {{ content|safe }}
+            </div>
+            <div class="overall">
+               <p>{% set product_start = content.find('<span class="content-sp"><b>Name:') %}
+                {% if product_start > -1 %}
+                    {% set product_end = content.find('</b>', product_start) %}
+                    {% if product_end > -1 %}
+                        {% set start_offset = '<span class="content-sp"><b>Name:'|length %}
+                        {% set product_name = content[product_start + start_offset:product_end] %}
+                        {{ product_name|safe }}
+                    {% endif %}
+                {% endif %} 
+               </p>
+                <div class="the_links">
+                    <a class="the_ref" href="/main_views">Women</a> &#47;
+                    <a class="the_ref" href="/">Home</a>
+                </div>
+                <div class="the_cal">
+                    <div class="inche">8</div>
+                    <div class="inche">10</div>
+                    <div class="inche">12</div>
+                    <div class="inche">14</div>
+                    <div class="inche" >16</div>
+                    <div class="inche">18</div>
+                    <div class="inche" >20</div>
+                    <div class="inche">22</div>
+                    <div class="inche">24</div>
+                    <div class="inche">26</div>
+                    <div class="inche" >28</div>
+                    <div class="inche">30</div>
+                    <div class="inche">32</div>
+                </div>
+                <button class="chart">INCHES CHART </button>
+                <p> Our model wears a 24 inches wavy hair </p>
+                <div class="add_cart_overall">
+                    <div class="add-cart">Add to Bag </div>
+                    <div class="love"><p>&#x2764;</p></div>
+                </div>
+            </div>
         </div>
     </body>
     </html>
