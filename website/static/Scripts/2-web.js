@@ -1,15 +1,11 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Get all elements with class 'carry_all'
-    var carryAllDivs = document.querySelectorAll('.carry_all');
+$(document).ready(function() {
+    $('.carry_all').on('click', function() {
+        var capturedContent = $(this).clone(); // Clone the entire structure
 
-    // Attach click event to each 'carry_all' div
-    carryAllDivs.forEach(function (div) {
-        div.addEventListener('click', function () {
-            // Get the data-href attribute value
-            var href = div.getAttribute('data-href');
+        // Append the captured content to the new page
+        $('#capturedContent').empty().append(capturedContent);
 
-            // Navigate to the specified URL
-            window.location.href = href;
-        });
+        // Navigate to the new page
+        window.location.href = '../../templates/display.html';
     });
 });
