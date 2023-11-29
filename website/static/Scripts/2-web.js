@@ -7,54 +7,50 @@ $(document).ready(function() {
         // Navigate to the new page
         window.location.href = '/display_selects?content=' + encodedContent;
     });
+    let selectedInches = null;
 
-});
-// script.js
+    // Initialize a variable to store quantity
+    let quantity = 0;
+    const inchesDictionary = {};
 
-// Initialize a variable to store selected inches information
-let selectedInches = null;
 
-// Initialize a variable to store quantity
-let quantity = 0;
+    // Function to handle inch selection
+    $('.inche').on('click', function() {
+        // Update the selectedInches variable
+        selectedInches = $(this).data('inches');
 
-// Function to handle inch selection
-function handleInchSelection(inch) {
-    // Update the selectedInches variable
-    selectedInches = inch;
+        // Enable or disable the add-cart button based on inch selection
+        updateAddCartButton();
+    });
 
-    // Enable or disable the add-cart button based on inch selection
-    updateAddCartButton();
-}
+    // Set up click event for add-cart button
+        const addCartButton = $('.add-cart').prop('disabled', true).on('click', function() {
+            // store the selected inch in an object
+            if (selectedInches !== null) {
+            // Increment the quantity for the selected inch, The key is the selected inch while the value is the quanity
+            if (inchesDictionary[selectedInches]) {
+            // Increment selected quantity whenever the add-cart class is clicked on  
+                inchesDictionary[selectedInches]++;
+            } else {
+                inchesDictionary[selectedInches] = 1;
+            }
+        }
+            console.log('Inches Dictionary:', inchesDictionary);
 
-// Function to enable or disable the add-cart button based on inch selection
-function updateAddCartButton() {
-    const addCartButton = $('.add-cart');
+        // Add your logic to store the product name, gram, price, etc.
+        // Optionally, reset selectedInches and update add-cart button after adding to the cart
+        updateAddCartButton();
+    });
 
-    // Check if an inch is selected
-    if (selectedInches !== null) {
-        // Enable the add-cart button
-        addCartButton.removeClass('disabled');
-
-        // Set up click event for add-cart button
-        addCartButton.click(function() {
-            // Increment the quantity
-            quantity++;
-
-            // Perform the desired action with the selected information
-            console.log('Selected Inches:', selectedInches);
-            console.log('Quantity:', quantity);
-
-            // Add your logic to store the product name, gram, price, etc.
-
-            // Optionally, reset selectedInches and update add-cart button after adding to the cart
-            selectedInches = null;
-            updateAddCartButton();
-        });
-    } else {
-        // Disable the add-cart button
-        addCartButton.addClass('disabled');
-
-        // Remove click event for add-cart button
-        addCartButton.off('click');
+    // Function to enable or disable the add-cart button based on inch selection
+    function updateAddCartButton() {
+        // Check if an inch is selected
+        if (selectedInches !== null) {
+            // Enable the add-cart button
+            addCartButton.prop('disabled', false);
+        } else {
+            // Disable the add-cart button
+            addCartButton.prop('disabled', true);
+        }
     }
-}
+});
