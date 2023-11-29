@@ -23,7 +23,9 @@
     </nav>
         <div id="capturedContent" class="all-div">
             <div class="carry_all">
-               {{ content|safe }}
+                {% set content_without_carry_content = content|replace('<div class="carry_content">', '<div class="carry_content" style="display:none;">') %}
+    
+                    {{ content_without_carry_content|safe }}
             </div>
             <div class="overall">
                 <div class="the_links">
@@ -66,7 +68,7 @@
                     <div class="inche">32</div>
                 </div>
                 <button class="chart">INCHES CHART </button>
-                <p> Our model wears a 
+                <p class="model-wears"> Our model wears a 
                     {% set inches_start = content.find('<span class="content-sp">Inches:') %}
                         {% if inches_start > -1 %}
                             {% set inches_end = content.find('</span>', inches_start) %}
@@ -85,6 +87,11 @@
                                     {{ product_name_2|safe }}
                                 {% endif %}
                             {% endif %} hair </p>
+                            <div class="for_gram">
+                            <label for="numberInput">Gram: </label>
+                                    <input id="numberInput" name="numberInput">
+                                    <button class="the-butt" type="button" onclick="handleButtonClick()">Enter</button>
+                            </div>
                 <div class="add_cart_overall">
                     <div class="add-cart">Add to Bag </div>
                     <div class="love"><p>&#x2764;</p></div>

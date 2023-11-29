@@ -79,14 +79,15 @@ a.active,a:hover {
 .all-div {
     margin: 0;
     margin-top: 100px; 
-    padding-left: 40px;
+    padding: 0;
+    margin-left: 40px;
     display: grid;
     grid-template-columns: 1fr 2fr;
 }
 .carry_all {
     width: 100%;
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     margin-left: 10px;
     padding-bottom: 40px;
 }
@@ -114,20 +115,10 @@ a.active,a:hover {
 }
 .overall {
     display: block;
-}
-.name_price {
-    display: flex;
     margin: 0;
     padding: 0;
-    margin-left: 10px;
-    align-items: center;
-    padding-bottom: 10px;
-    font-size: 20px;
 }
-.price_name {
-    margin-right: 100px;
-    font-weight: bold;
-}
+
 .the_links {
     display: flex;
     margin: 0;
@@ -145,6 +136,22 @@ a.active,a:hover {
 .the_href.active,.the_ref:hover {
     background: none;
     transition: .5s;
+}
+.name_price {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    align-items: center;
+    padding-bottom: 10px;
+    font-family: myFont;
+    font-size: 50px;
+}
+.price_name {
+    margin-right: 100px;
+    font-weight: bold;
+    font-family: myFont;
+    font-size: 33px;
 }
 .the_cal {
     display: flex;
@@ -179,6 +186,40 @@ p {
 .add_cart_overall {
     display: flex;
     align-items: center;
+}
+.for_gram {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin: 10px;
+    align-items: center;
+    margin-bottom: -2px;
+    font-family:  union,Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+#numberInput {
+    width: 50px;
+    height: 20px;
+    margin-left: 5px;
+    border-radius: 2px;
+    border: 1px solid rgb(209, 207, 207);
+}
+.the-butt {
+    margin-left: 5px;
+    background-color: black;
+    width: 60px;
+    height: 20px;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    font-family: myFont2;
+    font-size: 16px;
+    line-height: 20px;
+}
+p {
+    font-family: myFont;
+    font-size: 20px;
 }
 .add-cart {
     width: 300px;
@@ -246,5 +287,8 @@ p {
     }
     #check:checked ~ ul{
         left: 0;
+    }
+    .all-div {
+        display: block;
     }
 }
