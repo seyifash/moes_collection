@@ -183,14 +183,7 @@ p {
     color: #242420;;
 
 }
-.logos {
-    margin-top: 10px;
-    font-family: myFont3;
-    text-align: center;
-    font-size: 40px;
-    
-   
-}
+
 .add_cart_overall {
     display: flex;
     align-items: center;
@@ -291,9 +284,8 @@ p {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
     font-family: union,Arial,Helvetica,sans-serif;
-    font-size: 50px;
+    font-size: 40px;
 }
 .shopped-head {
     display: flex;
@@ -302,7 +294,15 @@ p {
     justify-content: center;
     margin-left: 100px;
     margin-right: 100px;
-    margin-top: 40px;
+    width: 95%;
+}
+.logos {
+    margin-top: 10px;
+    font-family: myFont3;
+    text-align: center;
+    font-size: 40px;
+    
+   
 }
 
 @media (max-width: 952px) {
