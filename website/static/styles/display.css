@@ -17,6 +17,15 @@
     font-family: myFont3;
     src: url(tasteful/Taste-s.otf);
 }
+@font-face{
+    font-family: myFont4;
+    src: url(SairaSemiCondensed-Regular.ttf);
+}
+
+@font-face{
+    font-family: myFont5;
+    src: url(Assistant-VariableFont_wght.ttf);
+}
 body {
         background: white;
         position: relative;
@@ -284,8 +293,8 @@ p {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: union,Arial,Helvetica,sans-serif;
     font-size: 40px;
+    font-family: myFont4;
 }
 .shopped-head {
     display: flex;
@@ -295,6 +304,7 @@ p {
     margin-left: 100px;
     margin-right: 100px;
     width: 95%;
+
 }
 .logos {
     margin-top: 10px;
@@ -303,6 +313,34 @@ p {
     font-size: 40px;
     
    
+}
+.order-details {
+    width: 90%;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+    align-items:flex-start;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-family: myFont4;
+    font-size: 6px;
+}
+.name-details {
+    margin: 0;
+}
+.inches-detail {
+    display: block;
+}
+.inch-span {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+
+}
+.gram-details {
+    display: block;
 }
 
 @media (max-width: 952px) {

@@ -9,29 +9,45 @@
     <link rel="stylesheet" href="../static/styles/display.css">
     <script src="../static/scripts/2-web.js"></script>
 </head>
-<body><div class="shopped-head">
-    <span class="logos"><i>M</i>o<i>ES</i>&nbsp;  <i>C</i>o<i>ll</i>ectio<i>N</i></span>
-</div>
+<body>
+    <div class="shopped-head">
+        <span class="logos"><i>M</i>o<i>ES</i>&nbsp;  <i>C</i>o<i>ll</i>ectio<i>N</i></span>
+    </div>
+    <div class="cart-head">
+        <span class="cont">&#8592; Continue shopping</span>
+        <button class="check-out">checkout</button> 
+    </div>
+    <div class="shopped-bag">
+        <span class="shop-bag">MY SHOPPING BAG</span>
         {% for inch, grams in inchesDictionary.items() %}
-        <div class="cart-head">
-           <span class="cont">&#8592; Continue shopping</span>
-           <button class="check-out">checkout</button> 
+        <div class="order-details">
+            {% for gram, details in grams.items() %}
+            <div class='name-details'>
+                <span class="inch-p">{{ details.productName }}</span>
+            </div>
+            <div class="inches-detail">
+                <span class="inch-span">Inches</span>
+                <button>{{ inch }}</button>
+            </div>
+            <div class="gram-details">
+                <span class="inch-span">Gram</span>
+                <button>{{ gram }}</button>
+            </div>
+            <div class="quantity-details">
+                <span>Quantity</span>
+                <span>{{ details.quantity }}</span>
+            </div>
+            <div class="price-detail">
+                <span>Price</span>
+                <span>{{ details.productPrice }}</span>
+            </div>
         </div>
-    <div class="shopped-bag"><span class="shop-bag">My Shopping Bag</span>
-        <span>{{ inch }}</span>
-                {% for gram, details in grams.items() %}
-                    <li>{{ gram }}</li>
-                    <ul>
-                        <li>Quantity: {{ details.quantity }}</li>
-                        <li>Product Name: {{ details.productName }}</li>
-                        <li>Product Price: {{ details.productPrice }}</li>
-                        <li>Total: {{ details.total }}</li>
-                    </ul>
+        <div class="total-details">
+            Total: {{ details.total }}
+        </div>
+    </div>
                 {% endfor %}
-            </ul>
         {% endfor %}
-    </ul>
-        </div>
     
 </body>
 </html>
