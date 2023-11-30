@@ -23,27 +23,32 @@
         <div class="order-details">
             {% for gram, details in grams.items() %}
             <div class='name-details'>
-                <span class="inch-p">{{ details.productName }}</span>
+                <span class="inch-span">{{ details.productName }}</span>
             </div>
             <div class="inches-detail">
                 <span class="inch-span">Inches</span>
-                <button>{{ inch }}</button>
+                <div class="box-inch">{{ inch }}</div>
             </div>
             <div class="gram-details">
                 <span class="inch-span">Gram</span>
-                <button>{{ gram }}</button>
+                <div class="box-inch">{{ gram }}g</div>
             </div>
             <div class="quantity-details">
-                <span>Quantity</span>
-                <span>{{ details.quantity }}</span>
+                <span class="inch-span">Quantity</span>
+                <div class="box-contain">
+                <div class="box-plus">&plus;</div>
+                <div class="box-quant">{{ details.quantity }}</div>
+                <div class="box-minus">&minus;</div>
+                </div>
             </div>
             <div class="price-detail">
-                <span>Price</span>
-                <span>{{ details.productPrice }}</span>
+                <span class="inch-span">Price</span>
+                <div class="p-tag">&#8358;{{ details.productPrice }}</div>
             </div>
         </div>
         <div class="total-details">
-            Total: {{ details.total }}
+            <div class="sub-total">SubTotal <span class="sub">&#8358;{{ details.total }}</span></div>
+            <div class="tot">Total<span class="exclu">&#40;Excl delivery&#41;</span> <span class="subb">&#8358;{{ details.total }}</span></div>
         </div>
     </div>
                 {% endfor %}
