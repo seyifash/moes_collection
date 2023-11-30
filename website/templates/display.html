@@ -41,7 +41,7 @@
                             {{ product_name|safe }}
                         {% endif %}
                     {% endif %} </span>
-                    <span class="price_name">&#8358;{% set pro_price_str = content.find('<span class="content-sp"><b>Price: ') %}
+                    <span class="price">&#8358;{% set pro_price_str = content.find('<span class="content-sp"><b>Price: ') %}
                         {% if pro_price_str > -1 %}
                         {% set pro_price_end = content.find('</span>', pro_price_str) %}
                         {% if pro_price_end > -1 %}
@@ -90,7 +90,7 @@
                             <div class="for_gram">
                             <label for="numberInput">Gram: </label>
                                     <input id="numberInput" name="numberInput">
-                                    <button class="the-butt" type="button" onclick="handleButtonClick()">Enter</button>
+                                    <button class="the-butt" type="button">Enter</button>
                             </div>
                 <div class="add_cart_overall">
                     <div class="add-cart">Add to Bag </div>

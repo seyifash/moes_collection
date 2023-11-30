@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Cart</title>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    <ul>
+        {% for inch, grams in inchesDictionarys.items() %}
+            <li>{{ inch }}</li>
+            <ul>
+                {% for gram, details in grams.items() %}
+                    <li>{{ gram }}</li>
+                    <ul>
+                        <li>Quantity: {{ details.quantity }}</li>
+                        <li>Product Name: {{ details.productName }}</li>
+                        <li>Product Price: {{ details.productPrice }}</li>
+                        <li>Total: {{ details.total }}</li>
+                    </ul>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+</body>
+</html>

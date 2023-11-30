@@ -7,45 +7,91 @@ $(document).ready(function() {
         // Navigate to the new page
         window.location.href = '/display_selects?content=' + encodedContent;
     });
+    
+    //a varaible to store the selected inches as well as gram value
     let selectedInches = null;
+    gramValue = null;
 
-    // Initialize a variable to store quantity
-    let quantity = 0;
+    // Initialize an object variable to store quantity and inches 
     const inchesDictionary = {};
-
-
+   
     // Function to handle inch selection
     $('.inche').on('click', function() {
         // Update the selectedInches variable
         selectedInches = $(this).data('inches');
-
+        if (!inchesDictionary[selectedInches]) {
+            inchesDictionary[selectedInches] = {};
+        }
         // Enable or disable the add-cart button based on inch selection
         updateAddCartButton();
     });
 
-    // Set up click event for add-cart button
-        const addCartButton = $('.add-cart').prop('disabled', true).on('click', function() {
-            // store the selected inch in an object
-            if (selectedInches !== null) {
-            // Increment the quantity for the selected inch, The key is the selected inch while the value is the quanity
-            if (inchesDictionary[selectedInches]) {
-            // Increment selected quantity whenever the add-cart class is clicked on  
-                inchesDictionary[selectedInches]++;
-            } else {
-                inchesDictionary[selectedInches] = 1;
-            }
-        }
-            console.log('Inches Dictionary:', inchesDictionary);
-
-        // Add your logic to store the product name, gram, price, etc.
-        // Optionally, reset selectedInches and update add-cart button after adding to the cart
+    $('.the-butt').on('click', function() {
+        // Read the value from the input field
+        gramValue = $('#numberInput').val();
+        
+        $('#numberInput').val('');
+        // Update the Add to Cart button status
         updateAddCartButton();
     });
+
+    // Set up click event for add-cart button
+    const addCartButton = $('.add-cart').prop('disabled', true).on('click', function() {
+        // Get product name and price from the span tags
+        const productName = $('.price_name').text().trim(); 
+        const productPriceText = $('.price').text().trim().replace(/\s+/g, ' ');
+        const productPriceMatch = productPriceText.match(/(\d+(\.\d+)?)/);
+        const productPrice = productPriceMatch ? parseInt(productPriceMatch[1]) : 0;
+
+        // Check if both inch and gram are selected
+        if (selectedInches !== null && gramValue !== null) {
+            if (!inchesDictionary[selectedInches][gramValue]) {
+                inchesDictionary[selectedInches][gramValue] = {
+                    quantity: 0,
+                    productName: productName,
+                    productPrice: productPrice,
+                    total: 0
+                };
+            }
+    
+            // Increment the quantity for the selected inch and gram
+        inchesDictionary[selectedInches][gramValue].quantity++;
+        quants = inchesDictionary[selectedInches][gramValue].quantity;
+        price = inchesDictionary[selectedInches][gramValue].productPrice;
+        inchesDictionary[selectedInches][gramValue].total = quants * price;
+
+        console.log('Inches Dictionary:', inchesDictionary);
+
+        // Add your logic to store the product name, price, etc.
+
+        //update add-cart button after adding to the cart
+        selectedInches = null;
+        gramValue= null;
+        updateAddCartButton();
+        sendInchesDictionary();
+    }
+    });
+
+    function sendInchesDictionary() {
+        $.ajax({
+            url: '/display_cart',
+            type: 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({ inchesDictionary: inchesDictionary }),
+            success: function (response) {
+                // Handle the response as needed
+                console.log('Inches Dictionary sent successfully');
+            },
+            error: function (error) {
+                console.error('Error sending data to server:', error);
+            }
+        });
+    }
 
     // Function to enable or disable the add-cart button based on inch selection
     function updateAddCartButton() {
         // Check if an inch is selected
-        if (selectedInches !== null) {
+        if (selectedInches !== null && gramValue !== null) {
             // Enable the add-cart button
             addCartButton.prop('disabled', false);
         } else {
@@ -53,4 +99,5 @@ $(document).ready(function() {
             addCartButton.prop('disabled', true);
         }
     }
+    
 });
