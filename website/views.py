@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, session
+
 from models import storage
 
 views = Blueprint('views', __name__)
@@ -20,9 +21,15 @@ def display():
 
 @views.route('/display_cart', methods=['GET', 'POST'])
 def display_cart():
+    
     if request.method == 'POST':
         # Assuming inchesDictionary is available in the JavaScript file
-        inchesDictionarys = request.json.get('inchesDictionary')
+        inchesDictionary = request.json.get('inchesDictionary')
+        print('Received inchesDictionary:', inchesDictionary)
+        session['inchesDictionary'] = inchesDictionary
         return jsonify(inchesDictionary)
-
-    return render_template('display_cart.html', inchesDictionarys=inchesDictionarys)
+    inchesDictionary = session.get('inchesDictionary', {})   
+    print('Rendering display_cart.html')
+    print('Received inchesDictionary:', inchesDictionary)
+    return render_template('display_cart.html', inchesDictionary=inchesDictionary)
+        

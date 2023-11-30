@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display Cart</title>
+    <title>Hairs and Prices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="../static/styles/display.css">
+    <script src="../static/scripts/2-web.js"></script>
 </head>
-<body>
-    <h1>Shopping Cart</h1>
-    <ul>
-        {% for inch, grams in inchesDictionarys.items() %}
-            <li>{{ inch }}</li>
-            <ul>
+<body><div class="shopped-head">
+    <span class="logos"><i>M</i>o<i>ES</i>&nbsp;  <i>C</i>o<i>ll</i>ectio<i>N</i></span>
+</div>
+        {% for inch, grams in inchesDictionary.items() %}
+        <div class="cart-head">
+           <span class="cont">&#8592; Continue shopping</span>
+           <button class="check-out">checkout</button> 
+        </div>
+    <div class="shopped-bag"><span class="shop-bag">My Shopping Bag</span>
+        <span>{{ inch }}</span>
                 {% for gram, details in grams.items() %}
                     <li>{{ gram }}</li>
                     <ul>
@@ -23,5 +31,7 @@
             </ul>
         {% endfor %}
     </ul>
+        </div>
+    
 </body>
 </html>

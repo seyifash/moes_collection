@@ -77,10 +77,11 @@ $(document).ready(function() {
             url: '/display_cart',
             type: 'POST',
             contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify({ inchesDictionary: inchesDictionary }),
+            data:   JSON.stringify({ inchesDictionary: inchesDictionary }),
             success: function (response) {
                 // Handle the response as needed
                 console.log('Inches Dictionary sent successfully');
+                window.location.href = '/display_cart';
             },
             error: function (error) {
                 console.error('Error sending data to server:', error);
