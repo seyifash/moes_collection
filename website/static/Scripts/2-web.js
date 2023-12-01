@@ -14,7 +14,6 @@ $(document).ready(function() {
 
     // Initialize an object variable to store quantity and inches 
     const inchesDictionary = {};
-   
     // Function to handle inch selection
     $('.inche').on('click', function() {
         // Update the selectedInches variable
