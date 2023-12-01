@@ -17,7 +17,7 @@ def login():
         if existingUser:
             if password2 == existingUser.password:
                 login_user(existingUser)
-                return redirect(url_for('views.mainViews'))
+                return redirect(url_for('views.mainViews', user_id=current_user.id))
             else:
                 flash('Incorrect password, try again', category='error') 
         else:
@@ -59,5 +59,5 @@ def sign_up():
             created_user.save()
             flash('Account created!', category='success')
             login_user(created_user) 
-            return redirect(url_for('views.mainViews'))
+            return redirect(url_for('views.mainViews', user_id=current_user.id))
     return render_template("signup.html")

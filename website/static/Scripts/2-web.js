@@ -1,19 +1,48 @@
 $(document).ready(function() {
     $('.carry_all').on('click', function() {
-        const capturedContent = $(this).clone(); // Clone the entire structure
-        // Append the captured content to the new page
-        const encodedContent = encodeURIComponent(capturedContent.html());
+        // Extract information from the clicked carry_all div
+        const imageSrc = $(this).find('.hair').attr('src');
+        const productName = $(this).find('.content-sp:nth-child(1)').text().replace('Name: ', '');
+        const productInches = $(this).find('.content-sp:nth-child(2)').text().replace('Inches: ', '');
+        const productQuantity = $(this).find('.content-sp:nth-child(3)').text().replace('Gram: ', '');
+        const productColor = $(this).find('.content-sp:nth-child(4)').text().replace('Colors: ', '');
+        const productPrice = $(this).find('.content-sp:nth-child(5)').text().replace('Price: ', '');
 
-        // Navigate to the new page
-        window.location.href = '/display_selects?content=' + encodedContent;
+        // Create a dictionary with the extracted information
+        const productInfo = {
+            'imageSrc': imageSrc,
+            'productName': productName,
+            'productInches': productInches,
+            'productQuantity': productQuantity,
+            'productColor': productColor,
+            'productPrice': productPrice
+        };
+
+        // Do something with the productInfo dictionary
+        console.log(productInfo);
+
+
+        // Send data as a POST request
+        $.ajax({
+            url: '/display_selects/' + userId,
+            type: 'POST',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({ content: productInfo }),
+            success: function(response) {
+                window.location.href = '/display_selects/' + userId
+            },
+            error: function(error) {
+                console.error('Error sending data to server:', error);
+            }
+        });
     });
     
     //a varaible to store the selected inches as well as gram value
     let selectedInches = null;
-    gramValue = null;
+    let gramValue = null;
 
     // Initialize an object variable to store quantity and inches 
-    const inchesDictionary = {};
+        const inchesDictionary = {};
     // Function to handle inch selection
     $('.inche').on('click', function() {
         // Update the selectedInches variable
@@ -25,10 +54,18 @@ $(document).ready(function() {
         updateAddCartButton();
     });
 
+    $('#numberInput').on('keydown', function(event) {
+        // Check if the pressed key is Enter (key code 13)
+        if (event.keyCode === 13) {
+            // Trigger the click event of the corresponding button
+            $('.the-butt').click();
+        }
+    });
+
     $('.the-butt').on('click', function() {
         // Read the value from the input field
         gramValue = $('#numberInput').val();
-        
+        console.log(gramValue)
         $('#numberInput').val('');
         // Update the Add to Cart button status
         updateAddCartButton();
@@ -73,14 +110,14 @@ $(document).ready(function() {
 
     function sendInchesDictionary() {
         $.ajax({
-            url: '/display_cart',
+            url: '/display_cart/' + userId,
             type: 'POST',
             contentType: 'application/json;charset=UTF-8',
             data:   JSON.stringify({ inchesDictionary: inchesDictionary }),
             success: function (response) {
                 // Handle the response as needed
                 console.log('Inches Dictionary sent successfully');
-                window.location.href = '/display_cart';
+                window.location.href = '/display_cart/' + userId;
             },
             error: function (error) {
                 console.error('Error sending data to server:', error);

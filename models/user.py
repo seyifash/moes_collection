@@ -2,7 +2,7 @@ from models.base_model import BaseModel, Base
 from flask_login import UserMixin
 from hashlib import md5
 from sqlalchemy import String, Column
-
+from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base, UserMixin):
@@ -12,6 +12,7 @@ class User(BaseModel, Base, UserMixin):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128), nullable=False)
+    orders = relationship('Order', backref='users')
     
     def __init__(self, *args, **kwargs):
         """initializes user"""

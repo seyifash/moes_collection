@@ -10,6 +10,7 @@
     <script src="../static/scripts/2-web.js"></script>
 </head>
 <body>
+    <div class="centered-div">
     <div class="shopped-head">
         <span class="logos"><i>M</i>o<i>ES</i>&nbsp;  <i>C</i>o<i>ll</i>ectio<i>N</i></span>
     </div>
@@ -19,40 +20,38 @@
     </div>
     <div class="shopped-bag">
         <span class="shop-bag">MY SHOPPING BAG</span>
-        {% for inch, grams in inchesDictionary.items() %}
+        {% for order in inchesDictionary %}
         <div class="order-details">
-            {% for gram, details in grams.items() %}
             <div class='name-details'>
-                <span class="inch-span">{{ details.productName }}</span>
+                <span class="inch-span">{{ order.productName }}</span>
             </div>
             <div class="inches-detail">
                 <span class="inch-span">Inches</span>
-                <div class="box-inch">{{ inch }}</div>
+                <div class="box-inch">{{ order.productInches }}</div>
             </div>
             <div class="gram-details">
                 <span class="inch-span">Gram</span>
-                <div class="box-inch">{{ gram }}g</div>
+                <div class="box-inch">{{ order.productGram }}g</div>
             </div>
             <div class="quantity-details">
                 <span class="inch-span">Quantity</span>
                 <div class="box-contain">
                 <div class="box-plus">&plus;</div>
-                <div class="box-quant">{{ details.quantity }}</div>
+                <div class="box-quant">{{ order.productQuantity }}</div>
                 <div class="box-minus">&minus;</div>
                 </div>
             </div>
             <div class="price-detail">
                 <span class="inch-span">Price</span>
-                <div class="p-tag">&#8358;{{ details.productPrice }}</div>
+                <div class="p-tag">&#8358;{{ order.productPrice }}</div>
             </div>
         </div>
         <div class="total-details">
-            <div class="sub-total">SubTotal <span class="sub">&#8358;{{ details.total }}</span></div>
-            <div class="tot">Total<span class="exclu">&#40;Excl delivery&#41;</span> <span class="subb">&#8358;{{ details.total }}</span></div>
+            <div class="sub-total">SubTotal <span class="sub">&#8358;{{ order.productTotal }}</span></div>
+            <div class="tot">Total<span class="exclu">&#40;Excl delivery&#41;</span> <span class="subb">&#8358;{{ order.productTotal }}</span></div>
+            <button class="check-outtotal">checkout</button>
         </div>
-    </div>
-                {% endfor %}
         {% endfor %}
-    
+        </div>
 </body>
 </html>

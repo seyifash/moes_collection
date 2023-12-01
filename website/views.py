@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, session
+from models.order import Order
 
 from models import storage
 
@@ -9,27 +10,53 @@ def home():
     return render_template("home.html")
 
 
-@views.route('/main_views')
-def mainViews():
+@views.route('/main_views/<user_id>')
+def mainViews(user_id):
     products = storage.all("Product")
-    return render_template("views.html", products=products)
+    return render_template("views.html", products=products, user_id=user_id)
 
-@views.route('/display_selects', methods=['GET', 'POST'])
-def display():
-    content = request.args.get('content', '')
-    return render_template('display.html', content=content)
+@views.route('/display_selects/<user_id>', methods=['GET', 'POST'])
+def display_select(user_id):
+    if request.method == 'POST':
+        # Get the JSON data from the request
+        json_data = request.get_json()
+        # Extract the content from the JSON data
+        content = json_data.get('content', {})
+        # Store the content in the session
+        session['content'] = content
+        return jsonify({'message': 'Content received successfully'})
+    
+    content_from_session = session.get('content', {})
+    return render_template('display.html', user_id=user_id, contents=content_from_session)
 
-@views.route('/display_cart', methods=['GET', 'POST'])
-def display_cart():
+@views.route('/display_cart/<user_id>', methods=['GET', 'POST'])
+def display_cart(user_id):
     
     if request.method == 'POST':
-        # Assuming inchesDictionary is available in the JavaScript file
         inchesDictionary = request.json.get('inchesDictionary')
-        print('Received inchesDictionary:', inchesDictionary)
+        for key, value in inchesDictionary.items():
+            productInches = key
+            for l, e in value.items():
+                productGram = l
+                productName = e['productName']
+                productPrice = e['productPrice']
+                productQuantity = e['quantity']
+                productTotal = e['total']
+                orderData = {
+                'productInches': productInches,
+                'productGram': productGram,
+                'productName': productName,
+                'productPrice': productPrice,
+                'productQuantity': productQuantity,
+                'productTotal': productTotal,
+                'user_id': user_id
+                }
+                user_order = Order(**orderData)
+                user_order.save()
+
         session['inchesDictionary'] = inchesDictionary
         return jsonify(inchesDictionary)
-    inchesDictionary = session.get('inchesDictionary', {})   
-    print('Rendering display_cart.html')
-    print('Received inchesDictionary:', inchesDictionary)
+    
+    inchesDictionary = storage.get_orders_by_user_id(Order, user_id)
     return render_template('display_cart.html', inchesDictionary=inchesDictionary)
         

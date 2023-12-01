@@ -2,12 +2,13 @@ from models.base_model import BaseModel, Base
 from models.user import User
 from models.product import Product
 from models.seller_user import Seller
+from models.order import Order
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm.session import sessionmaker
 
-classes = {"User": User, "Product": Product, "Seller": Seller}
+classes = {"User": User, "Product": Product, "Seller": Seller, "Order": Order}
 
 class DBStorage:
     """ data storage using sqlalchemy"""
@@ -64,4 +65,11 @@ class DBStorage:
         """Get a user by ID."""
         if cls and cls in classes.values():
             return self.__session.query(cls).get(user_id )
+        return None
+    
+    def get_orders_by_user_id(self, cls, user_id):
+        if cls in classes.values():
+            cls_items = self.all(cls)
+            l = [l for l in cls_items.values() if l.user_id == user_id]
+            return l
         return None

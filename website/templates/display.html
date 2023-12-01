@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="../static/styles/display.css">
+    <script>var userId = "{{ user_id }}";</script>
     <script src="../static/scripts/2-web.js"></script>
 </head>
 <body>
@@ -23,34 +24,22 @@
     </nav>
         <div id="capturedContent" class="all-div">
             <div class="carry_all">
-                {% set content_without_carry_content = content|replace('<div class="carry_content">', '<div class="carry_content" style="display:none;">') %}
-    
-                    {{ content_without_carry_content|safe }}
+                <div class="carry_img">
+                    <img class="hair" src="{{ contents.imageSrc }}">
+                </div>
             </div>
             <div class="overall">
                 <div class="the_links">
                     <a class="the_ref" href="/main_views">Women</a> &#47;
                     <a class="the_ref" href="/">Home</a>
                 </div>
-                <div class="name_price"> <span class="price_name">{% set product_start = content.find('<span class="content-sp"><b>Name:') %}
-                    {% if product_start > -1 %}
-                        {% set product_end = content.find('</b>', product_start) %}
-                        {% if product_end > -1 %}
-                            {% set start_offset = '<span class="content-sp"><b>Name:'|length %}
-                            {% set product_name = content[product_start + start_offset:product_end] %}
-                            {{ product_name|safe }}
-                        {% endif %}
-                    {% endif %} </span>
-                    <span class="price">&#8358;{% set pro_price_str = content.find('<span class="content-sp"><b>Price: ') %}
-                        {% if pro_price_str > -1 %}
-                        {% set pro_price_end = content.find('</span>', pro_price_str) %}
-                        {% if pro_price_end > -1 %}
-                        {% set str_offset = '<span class="content-sp"<b>Price: '|length %}
-                            {% set pro_price = content[pro_price_str + str_offset:pro_price_end] %}
-                            {{ pro_price|safe }}
-                            {% endif %}
-                    {% endif %}  
-                        </span>
+                <div class="name_price">
+                    <span class="price_name">
+                        {{ contents.productName }}
+                    </span>
+                    <span class="price">
+                        &#8358;{{ contents.productPrice}}
+                    </span>
                 </div>
                 <div class="the_cal">
                     <div class="inche" data-inches="8">8</div>
@@ -68,30 +57,12 @@
                     <div class="inche" data-inches="32">32</div>
                 </div>
                 <button class="chart">INCHES CHART </button>
-                <p class="model-wears"> Our model wears a 
-                    {% set inches_start = content.find('<span class="content-sp">Inches:') %}
-                        {% if inches_start > -1 %}
-                            {% set inches_end = content.find('</span>', inches_start) %}
-                            {% if inches_end > -1 %}
-                                {% set start_offset = '<span class="content-sp">Inches:'|length %}
-                                {% set inches_info = content[inches_start + start_offset:inches_end] %}
-                                {{ inches_info|safe }}
-                            {% endif %}
-                        {% endif %}
-                        inches {% set product_name_start = content.find('<span class="content-sp"><b>Name:') %}
-                            {% if product_name_start > -1 %}
-                                {% set product_name_end = content.find('</b>', product_name_start) %}
-                                {% if product_name_end > -1 %}
-                                    {% set start_offset = '<span class="content-sp"><b>Name:'|length %}
-                                    {% set product_name_2 = content[product_name_start + start_offset:product_name_end] %}
-                                    {{ product_name_2|safe }}
-                                {% endif %}
-                            {% endif %} hair </p>
-                            <div class="for_gram">
-                            <label for="numberInput">Gram: </label>
-                                    <input id="numberInput" name="numberInput">
-                                    <button class="the-butt" type="button">Enter</button>
-                            </div>
+                <p class="model-wears"> Our model wears a {{ contents.productInches }} inches {{ contents.productName }} hair </p>
+                    <div class="for_gram">
+                        <label for="numberInput">Gram: </label>
+                            <input id="numberInput" name="numberInput">
+                            <button class="the-butt" type="button">Enter</button>
+                    </div>
                 <div class="add_cart_overall">
                     <div class="add-cart">Add to Bag </div>
                     <div class="love"><p>&#x2764;</p></div>
