@@ -26,7 +26,7 @@
     </nav>
     <div class="all-div">
         {% for product in products.values() %}
-        <div class="carry_all">
+        <div class="carry_all" data-product-id="{{ product.seller_id }}">
         <div class="carry_img">
             <img class="hair" src="../{{ product.productImage|replace('website', '') }}">
         </div>

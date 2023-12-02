@@ -73,3 +73,12 @@ class DBStorage:
             l = [l for l in cls_items.values() if l.user_id == user_id]
             return l
         return None
+    
+    def get_sellers_orders(self, cls, seller_id):
+        if cls in classes.values():
+            sellers = self.get_user_by_id(cls, seller_id)
+            if sellers:
+                orders = seller.orders
+                for order in orders:
+                user = self.get_user_by_id(User, order.user_id)
+                    

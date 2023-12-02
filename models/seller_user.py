@@ -13,6 +13,7 @@ class Seller(BaseModel, Base, UserMixin):
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128), nullable=False)
     products = relationship('Product', backref='seller')
+    orders = relationship('Order', backref='seller')
 
     
     def __init__(self, *args, **kwargs):

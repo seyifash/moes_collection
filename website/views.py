@@ -42,6 +42,7 @@ def display_cart(user_id):
                 productPrice = e['productPrice']
                 productQuantity = e['quantity']
                 productTotal = e['total']
+                seller_id = e['sellerId']
                 orderData = {
                 'productInches': productInches,
                 'productGram': productGram,
@@ -49,7 +50,8 @@ def display_cart(user_id):
                 'productPrice': productPrice,
                 'productQuantity': productQuantity,
                 'productTotal': productTotal,
-                'user_id': user_id
+                'user_id': user_id,
+                'seller_id': seller_id
                 }
                 user_order = Order(**orderData)
                 user_order.save()

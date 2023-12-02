@@ -37,3 +37,8 @@ def sellerViews():
             print(created_product)
             created_product.save()
     return render_template('seller.html')
+
+@seller_views.route('/seller_orders', methods=['GET', 'POST'])
+def sellers_orders():
+    pass
+

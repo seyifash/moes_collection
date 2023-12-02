@@ -100,6 +100,13 @@ a.active,a:hover {
     margin-left: 10px;
     padding-bottom: 40px;
 }
+.carry_not {
+    width: 100%;
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    padding-bottom: 40px;
+}
 .carry_img {
     width: 400px;
     height: 400px;
@@ -406,7 +413,7 @@ p {
     display: flex;
     justify-content: space-between;
     color: black;
-    width: 330px;
+    width: 350px;
     font-size: 16px;
     font-family: myFont5;
     padding-bottom: 10px;
@@ -414,7 +421,7 @@ p {
 }
 .tot {
     display: flex;
-    width: 330px;
+    width: 350px;
     font-weight: bold;
     font-size: 25px;
     color: black;
@@ -436,7 +443,7 @@ p {
 .check-outtotal {
     border: none;
     height: 50px;
-    width: 330px;
+    width: 350px;
     background-color: orange;
     font-family: myFont;
     font-size: 30px;

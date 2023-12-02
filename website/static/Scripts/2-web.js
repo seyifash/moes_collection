@@ -1,6 +1,9 @@
 $(document).ready(function() {
+
+
     $('.carry_all').on('click', function() {
         // Extract information from the clicked carry_all div
+       const sellerId = $(this).data('product-id');
         const imageSrc = $(this).find('.hair').attr('src');
         const productName = $(this).find('.content-sp:nth-child(1)').text().replace('Name: ', '');
         const productInches = $(this).find('.content-sp:nth-child(2)').text().replace('Inches: ', '');
@@ -15,11 +18,13 @@ $(document).ready(function() {
             'productInches': productInches,
             'productQuantity': productQuantity,
             'productColor': productColor,
-            'productPrice': productPrice
+            'productPrice': productPrice,
+            'sellerId': sellerId
         };
 
         // Do something with the productInfo dictionary
         console.log(productInfo);
+        console.log('sellerid:' , sellerId);
 
 
         // Send data as a POST request
@@ -30,19 +35,20 @@ $(document).ready(function() {
             data: JSON.stringify({ content: productInfo }),
             success: function(response) {
                 window.location.href = '/display_selects/' + userId
+                console.log('sellerid:' , sellerId);
             },
             error: function(error) {
                 console.error('Error sending data to server:', error);
             }
-        });
     });
+});
     
     //a varaible to store the selected inches as well as gram value
     let selectedInches = null;
     let gramValue = null;
 
     // Initialize an object variable to store quantity and inches 
-        const inchesDictionary = {};
+    const inchesDictionary = {};
     // Function to handle inch selection
     $('.inche').on('click', function() {
         // Update the selectedInches variable
@@ -78,6 +84,7 @@ $(document).ready(function() {
         const productPriceText = $('.price').text().trim().replace(/\s+/g, ' ');
         const productPriceMatch = productPriceText.match(/(\d+(\.\d+)?)/);
         const productPrice = productPriceMatch ? parseInt(productPriceMatch[1]) : 0;
+        let sellerId = $('.carry_not').data('seller-id');
 
         // Check if both inch and gram are selected
         if (selectedInches !== null && gramValue !== null) {
@@ -86,7 +93,8 @@ $(document).ready(function() {
                     quantity: 0,
                     productName: productName,
                     productPrice: productPrice,
-                    total: 0
+                    total: 0,
+                    sellerId: sellerId
                 };
             }
     
@@ -95,8 +103,9 @@ $(document).ready(function() {
         quants = inchesDictionary[selectedInches][gramValue].quantity;
         price = inchesDictionary[selectedInches][gramValue].productPrice;
         inchesDictionary[selectedInches][gramValue].total = quants * price;
-
+        
         console.log('Inches Dictionary:', inchesDictionary);
+        console.log('sellerid:' , sellerId);
 
         // Add your logic to store the product name, price, etc.
 
@@ -107,7 +116,6 @@ $(document).ready(function() {
         sendInchesDictionary();
     }
     });
-
     function sendInchesDictionary() {
         $.ajax({
             url: '/display_cart/' + userId,
