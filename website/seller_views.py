@@ -39,6 +39,7 @@ def sellerViews():
     return render_template('seller.html')
 
 @seller_views.route('/seller_orders', methods=['GET', 'POST'])
-def sellers_orders():
-    pass
-
+def sellers_order():
+    all_orders = storage.get_sellers_orders(current_user.id)
+    
+    return render_template('seller_orders.html', all_orders=all_orders)

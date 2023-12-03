@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+@font-face{
+    font-family: myFont;
+    src: url(quesha/Quesha.ttf);
+}
+@font-face{
+    font-family: myFont2;
+    src: url(Union-Font/Union-Regular.ttf);
+}
+@font-face{
+    font-family: myFont3;
+    src: url(tasteful/Taste-s.otf);
+}
+@font-face{
+    font-family: myFont4;
+    src: url(NimbusSansNovusTOT-Reg.otf);
+}
+
+@font-face{
+    font-family: myFont5;
+    src: url(NimbusSanL-Reg.otf);
+}
+body {
+    background: white;
+    position: relative;
+}
+.main-contain {
+    display: flex;
+    width: 100%;
+}
+
+.column-1 {
+    width: 300px;
+    max-width: 300px;
+    background-color: orange; 
+    display: flex;
+    flex-direction: column;
+}
+label.logo {
+    font-size: 30px;
+    color: black;
+    padding: 20px 10px;
+    font-weight: medium;
+    font-family: myFont3
+}
+
+.home-div, .productboard {
+    width: 100%;
+    padding: 20px 40px;
+    font-family: myFont4;
+}
+.column-1 a {
+    text-decoration: none;
+    color: black;
+}
+
+.home-div:hover, .productboard:hover {
+    background-color: white;
+    border-right: 1px solid  rgb(241, 236, 236);
+    border-top-right-radius: 30px; 
+    border-bottom-right-radius: 30px;
+    width: 105%;
+}
+
+.column-2 {
+    flex-grow: 1;
+    background-color: white;
+    padding: 20px;
+}
+h3 {
+    padding: 0;
+    padding-bottom: 15px;
+    font-family: myFont;
+    font-size: 30px;
+}
+.topnav {
+    width: 300px;
+    height: 45px;
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    border-radius: 25px;
+}
+.topnav input {
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #cac7ff;
+    font-size: 15px;
+}
+
+input::placeholder {
+    color: #cac7ff;
+}
+.topnav button {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding-left: 10px;
+    padding-right: 8px;
+    color: #cac7ff;
+}
+.order-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    margin-top: 30px;
+    font-family: myFont5;
+}
+.colon-names {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    font-family: myFont;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.customer-name-div, .customer-order-date, .quant, .inches,
+.product-name, .price-product, .total-price {
+    font-family: myFont;
+    font-size: 20px;
+    margin-bottom: 30px; 
+}
+.cust-email, .date-data, .product-data, .quant-data, 
+.price-data, .total-data{
+    color: rgb(100, 100, 100);
+}
+.date-colon {
+    padding-bottom: 20px;
+}
