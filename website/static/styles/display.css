@@ -169,6 +169,10 @@ a.active,a:hover {
     font-family: myFont;
     font-size: 33px;
 }
+.price-tag {
+    display: flex;
+    flex-direction: column;
+}
 .the_cal {
     display: flex;
 }
@@ -192,7 +196,16 @@ a.active,a:hover {
     margin: 0;
     padding: 0;
     margin: 10px;
+    margin-bottom: 15px;
     font-size: 12px;
+    display: flex;
+    width: 260px;
+}
+.price_per_inch, .inche_Above_Twenty{
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: myFont;
 }
 p {
     margin-left: 10px;

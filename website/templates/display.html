@@ -56,7 +56,15 @@
                     <div class="inche" data-inches="30">30</div>
                     <div class="inche" data-inches="32">32</div>
                 </div>
+                <div class="price-tag">
                 <button class="chart">INCHES CHART </button>
+                <span class="price_per_inch">
+                    Inches below Twenty: &#8358;{{ contents.productPricePerInch }}
+                </span>
+                <span class="inche_Above_Twenty">
+                    Inches above Twenty: &#8358;{{ contents.inchesAboveTwenty }}
+                </span>
+                </div>
                 <p class="model-wears"> Our model wears a {{ contents.productInches }} inches {{ contents.productName }} hair </p>
                     <div class="for_gram">
                         <label for="numberInput">Gram: </label>

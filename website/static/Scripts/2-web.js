@@ -3,13 +3,15 @@ $(document).ready(function() {
 
     $('.carry_all').on('click', function() {
         // Extract information from the clicked carry_all div
-       const sellerId = $(this).data('product-id');
+        const sellerId = $(this).data('product-id');
         const imageSrc = $(this).find('.hair').attr('src');
         const productName = $(this).find('.content-sp:nth-child(1)').text().replace('Name: ', '');
         const productInches = $(this).find('.content-sp:nth-child(2)').text().replace('Inches: ', '');
         const productQuantity = $(this).find('.content-sp:nth-child(3)').text().replace('Gram: ', '');
         const productColor = $(this).find('.content-sp:nth-child(4)').text().replace('Colors: ', '');
         const productPrice = $(this).find('.content-sp:nth-child(5)').text().replace('Price: ', '');
+        const productPricePerInch = $(this).find('.content-sp:nth-child(6)').text().replace('Price by Inch: ', '');
+        const inchesAboveTwenty = $(this).find('.content-sp:nth-child(7)').text().replace('Price Inches Above Twenty: ', '');
 
         // Create a dictionary with the extracted information
         const productInfo = {
@@ -19,7 +21,9 @@ $(document).ready(function() {
             'productQuantity': productQuantity,
             'productColor': productColor,
             'productPrice': productPrice,
-            'sellerId': sellerId
+            'sellerId': sellerId,
+            'productPricePerInch': productPricePerInch,
+            'inchesAboveTwenty': inchesAboveTwenty
         };
 
         // Do something with the productInfo dictionary
@@ -81,9 +85,18 @@ $(document).ready(function() {
     const addCartButton = $('.add-cart').prop('disabled', true).on('click', function() {
         // Get product name and price from the span tags
         const productName = $('.price_name').text().trim(); 
+        // product price
         const productPriceText = $('.price').text().trim().replace(/\s+/g, ' ');
         const productPriceMatch = productPriceText.match(/(\d+(\.\d+)?)/);
         const productPrice = productPriceMatch ? parseInt(productPriceMatch[1]) : 0;
+        // price below 20
+        const productPricePerInchText = $('.price_per_inch').text().trim().replace(/\s+/g, ' ');
+        const priceInch = productPricePerInchText.match(/(\d+(\.\d+)?)/);
+        const productPricePerInch = priceInch ? parseInt(priceInch[1]) : 0;
+        // inches above twenty
+        const aboveTwentyText = $('.inche_Above_Twenty').text().trim().replace(/\s+/g, ' ');
+        const aboveTwentyMatch = aboveTwentyText.match(/(\d+(\.\d+)?)/);
+        const inchesAboveTwenty = aboveTwentyMatch ? parseInt(aboveTwentyMatch[1]) : 0; 
         let sellerId = $('.carry_not').data('seller-id');
 
         // Check if both inch and gram are selected
@@ -102,7 +115,21 @@ $(document).ready(function() {
         inchesDictionary[selectedInches][gramValue].quantity++;
         quants = inchesDictionary[selectedInches][gramValue].quantity;
         price = inchesDictionary[selectedInches][gramValue].productPrice;
+        if (selectedInches >= 8 && selectedInches <= 20) {
+            const pry1 = selectedInches - 8;
+            const pry2 = pry1 / 2;
+            const pry3 = productPricePerInch * pry2;
+            const tPry = price + pry3;
+            inchesDictionary[selectedInches][gramValue].total = quants * tPry;
+        } else if (selectedInches >= 20) {
+           const pry1 = selectedInches - 8;
+           const pry2 = pry1 / 2;
+            const pry3 = inchesAboveTwenty * pry2;
+            const tPry = price + pry3;
+            inchesDictionary[selectedInches][gramValue].total = quants * tPry;
+        } else {
         inchesDictionary[selectedInches][gramValue].total = quants * price;
+        }
         
         console.log('Inches Dictionary:', inchesDictionary);
         console.log('sellerid:' , sellerId);
