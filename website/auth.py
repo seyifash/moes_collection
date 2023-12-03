@@ -57,7 +57,6 @@ def sign_up():
             new_user.pop('password2')
             created_user = User(**new_user)
             created_user.save()
-            flash('Account created!', category='success')
             login_user(created_user) 
             return redirect(url_for('views.mainViews', user_id=current_user.id))
     return render_template("signup.html")

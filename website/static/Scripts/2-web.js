@@ -28,7 +28,6 @@ $(document).ready(function() {
 
         // Do something with the productInfo dictionary
         console.log(productInfo);
-        console.log('sellerid:' , sellerId);
 
 
         // Send data as a POST request

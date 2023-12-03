@@ -293,9 +293,11 @@ p {
     margin-top: 90px;
     justify-content: space-between;
 }
-.cont {
+.cont a {
     font-family: myFont;
     font-size: 25px;
+    background: white;
+    color: black;
 }
 .check-out {
     border: none;

@@ -60,5 +60,5 @@ def display_cart(user_id):
         return jsonify(inchesDictionary)
     
     inchesDictionary = storage.get_orders_by_user_id(Order, user_id)
-    return render_template('display_cart.html', inchesDictionary=inchesDictionary)
+    return render_template('display_cart.html', inchesDictionary=inchesDictionary, user_id=user_id)
         
