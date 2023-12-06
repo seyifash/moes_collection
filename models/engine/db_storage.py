@@ -54,6 +54,16 @@ class DBStorage:
     def close(self):
         """removes a session"""
         self.__session.remove()
+        
+    def count(self, cls=None):
+        count = 0
+        if cls:
+            if cls in classes.values():
+                count = len(self.all(cls))
+        else:
+             count = len(self.all())
+        
+        return count
     
     def get_by_email(self, cls, email):
         if cls:
