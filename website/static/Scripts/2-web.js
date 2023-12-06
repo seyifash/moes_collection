@@ -133,32 +133,66 @@ $(document).ready(function() {
         console.log('Inches Dictionary:', inchesDictionary);
         console.log('sellerid:' , sellerId);
 
-        // Add your logic to store the product name, price, etc.
-
-        //update add-cart button after adding to the cart
         selectedInches = null;
         gramValue= null;
         updateAddCartButton();
-        sendInchesDictionary();
+        updateCartOverlay();
     }
     });
-    function sendInchesDictionary() {
-        $.ajax({
-            url: '/display_cart/' + userId,
-            type: 'POST',
-            contentType: 'application/json;charset=UTF-8',
-            data:   JSON.stringify({ inchesDictionary: inchesDictionary }),
-            success: function (response) {
+    //function sendInchesDictionary() {
+        ////$.ajax({
+            //url: '/display_cart/' + userId,
+           // type: 'POST',
+            //contentType: 'application/json;charset=UTF-8',
+            //data:   JSON.stringify({ inchesDictionary: inchesDictionary }),
+            //success: function (response) {
                 // Handle the response as needed
-                console.log('Inches Dictionary sent successfully');
-                window.location.href = '/display_cart/' + userId;
-            },
-            error: function (error) {
-                console.error('Error sending data to server:', error);
+             //   console.log('Inches Dictionary sent successfully');
+             //   window.location.href = '/display_cart/' + userId;
+           // },
+            //error: function (error) {
+            //    console.error('Error sending data to server:', error);
+            //}
+       // });
+    //} 
+    function updateCartOverlay() {
+        let proName = document.getElementById('cartname');
+        let proPrice = document.getElementById('cartprice');
+        let proInqty = document.getElementById('qty-cart-inches');
+        let exPrice = document.getElementById('ex-price');
+    
+        // Clear existing content
+        proName.textContent = '';
+        proPrice.textContent = '';
+        proInqty.innerHTML = '';
+        exPrice.textContent = '';  // Assuming a default value if there's nothing in the dictionary
+    
+        for (let inches in inchesDictionary) {
+            for (let grams in inchesDictionary[inches]) {
+                let item = inchesDictionary[inches][grams];
+    
+                // Assuming you want to display information for the last item in the dictionary
+                proName.textContent = item.productName;
+                proPrice.textContent = '\u20A6' + item.productPrice;
+    
+                // Append quantity and inches information
+                proInqty.innerHTML = '<span class="cartqty" id="cartqty">Qty: <b>'+ item.quantity + '</b></span>' +
+                    '<span class="cart-inch" id="cart-inch"> inches: <b>' + inches + '</b></span>';
+    
+                // Update the total price
+                exPrice.textContent = '\u20A6' + item.total;
             }
-        });
+        }
+    
+        // Show the cart overlay
+        document.getElementById('cart-overlay').style.display = 'block';
+    
+        // Hide the cart overlay after 4 seconds
+        setTimeout(function () {
+            document.getElementById('cart-overlay').style.display = 'none';
+        }, 4000);
     }
-
+    
     // Function to enable or disable the add-cart button based on inch selection
     function updateAddCartButton() {
         // Check if an inch is selected

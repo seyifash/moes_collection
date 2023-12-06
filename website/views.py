@@ -29,7 +29,7 @@ def display_select(user_id):
     content_from_session = session.get('content', {})
     return render_template('display.html', user_id=user_id, contents=content_from_session)
 
-@views.route('/display_cart/<user_id>', methods=['GET', 'POST'])
+"""@views.route('/display_cart/<user_id>', methods=['GET', 'POST'])
 def display_cart(user_id):
     
     if request.method == 'POST':
@@ -60,5 +60,5 @@ def display_cart(user_id):
         return jsonify(inchesDictionary)
     
     inchesDictionary = storage.get_orders_by_user_id(Order, user_id)
-    return render_template('display_cart.html', inchesDictionary=inchesDictionary, user_id=user_id)
+    return render_template('display_cart.html', inchesDictionary=inchesDictionary, user_id=user_id)"""
         
