@@ -46,7 +46,7 @@ $(document).ready(function() {
     });
 });
     
-    //a varaible to store the selected inches as well as gram value
+    //a variable to store the selected inches as well as gram value
     let selectedInches = null;
     let gramValue = null;
 
@@ -81,7 +81,7 @@ $(document).ready(function() {
     });
 
     // Set up click event for add-cart button
-    const addCartButton = $('.add-cart').prop('disabled', true).on('click', function() {
+    const addCartButton = $('.add-cart').prop('disabled', true).on('click', async function() {
         // Get product name and price from the span tags
         const productName = $('.price_name').text().trim(); 
         // product price
@@ -109,6 +109,7 @@ $(document).ready(function() {
                     sellerId: sellerId
                 };
             }
+
     
             // Increment the quantity for the selected inch and gram
         inchesDictionary[selectedInches][gramValue].quantity++;
@@ -121,8 +122,8 @@ $(document).ready(function() {
             const tPry = price + pry3;
             inchesDictionary[selectedInches][gramValue].total = quants * tPry;
         } else if (selectedInches >= 20) {
-           const pry1 = selectedInches - 8;
-           const pry2 = pry1 / 2;
+            const pry1 = selectedInches - 8;
+            const pry2 = pry1 / 2;
             const pry3 = inchesAboveTwenty * pry2;
             const tPry = price + pry3;
             inchesDictionary[selectedInches][gramValue].total = quants * tPry;
@@ -134,27 +135,18 @@ $(document).ready(function() {
         console.log('sellerid:' , sellerId);
 
         selectedInches = null;
-        gramValue= null;
+        gramValue = null;
+
         updateAddCartButton();
         updateCartOverlay();
-    }
+        }
     });
-    //function sendInchesDictionary() {
-        ////$.ajax({
-            //url: '/display_cart/' + userId,
-           // type: 'POST',
-            //contentType: 'application/json;charset=UTF-8',
-            //data:   JSON.stringify({ inchesDictionary: inchesDictionary }),
-            //success: function (response) {
-                // Handle the response as needed
-             //   console.log('Inches Dictionary sent successfully');
-             //   window.location.href = '/display_cart/' + userId;
-           // },
-            //error: function (error) {
-            //    console.error('Error sending data to server:', error);
-            //}
-       // });
-    //} 
+
+    document.getElementById('cartButtss').addEventListener('click', function() {
+        // Call the sendOrderToBack function when the button is clicked
+        sendOrderToBack();
+    });
+
     function updateCartOverlay() {
         let proName = document.getElementById('cartname');
         let proPrice = document.getElementById('cartprice');
@@ -204,5 +196,60 @@ $(document).ready(function() {
             addCartButton.prop('disabled', true);
         }
     }
-    
+
+    function sendOrderToBack () {
+        $.ajax({
+        url: '/display_cart/' + userId,
+        type: 'POST',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify({ inchesDictionary: inchesDictionary }),
+        success: function (response) {
+            console.log('Inches Dictionary sent successfully');
+            console.log('Inches Dictionary:', inchesDictionary);
+            window.location.href = '/display_cart/' + userId;
+        },
+        error: function (error) {
+            console.error('Error sending data to server:', error);
+        }
+    });
+    }
+
+    async function updateServerOrders(inchesDictionary) {
+        try {
+            const response = await fetch(`/api/orders/${orderIds}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ inchesDictionary }),
+            });
+            const result = await response.json();
+            console.log(result);
+        } catch (error) {
+            console.error('Error updating server orders:', error);
+        }
+    }
+
+    async function checkOrderExists(orderId) {
+        try {
+            const response = await fetch(`/api/orders/${orderId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                // If the response is successful, the order exists
+                return true;
+            } else {
+                // If the response is not successful, the order doesn't exist
+                return false;
+            }
+        } catch (error) {
+            console.error('Error checking if order exists:', error);
+            return false;
+        }
+    }
+
 });
