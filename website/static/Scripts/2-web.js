@@ -49,7 +49,7 @@ $(document).ready(function() {
     //a variable to store the selected inches as well as gram value
     let selectedInches = null;
     let gramValue = null;
-
+    
     // Initialize an object variable to store quantity and inches 
     const inchesDictionary = {};
     // Function to handle inch selection
@@ -79,6 +79,8 @@ $(document).ready(function() {
         // Update the Add to Cart button status
         updateAddCartButton();
     });
+
+   
 
     // Set up click event for add-cart button
     const addCartButton = $('.add-cart').prop('disabled', true).on('click', async function() {
@@ -134,18 +136,51 @@ $(document).ready(function() {
         console.log('Inches Dictionary:', inchesDictionary);
         console.log('sellerid:' , sellerId);
 
-        selectedInches = null;
-        gramValue = null;
 
         updateAddCartButton();
         updateCartOverlay();
+        console.log("myid: ", orderId);
+        const orderExists = await checkOrderExists(orderId);
+        console.log("return", orderExists);
+        // Rest of your logic using orderExists
+        if (orderExists) {
+            // If it exists, update the existing order
+            updateServerOrders(inchesDictionary);
+        } else {
+            // If it doesn't exist, create a new order
+            sendOrderToBack();
+        }
+        selectedInches = null;
+        gramValue = null;
+
         }
     });
-
-    document.getElementById('cartButtss').addEventListener('click', function() {
-        // Call the sendOrderToBack function when the button is clicked
-        sendOrderToBack();
+    let orderId;
+    function sendOrderToBack () {
+        const { key: latestInches, value: latestEntry } = getLatestEntry(inchesDictionary);
+        const requestData = {
+            latestEntry: latestEntry,
+            latestInches: latestInches
+        };
+        $.ajax({
+        url: '/display_cart/' + userId,
+        type: 'POST',
+        contentType: 'application/json;charset=UTF-8',
+        data: JSON.stringify(requestData),
+        success: function (response) {
+            console.log('Inches Dictionary sent successfully');
+            allOrder = response;
+            if (allOrder && allOrder.id) {
+                // Update the global variable with order.id
+                orderId = allOrder.id;
+                console.log('Order ID:', orderId);
+            }
+        },
+        error: function (error) {
+            console.error('Error sending data to server:', error);
+        }
     });
+    }
 
     function updateCartOverlay() {
         let proName = document.getElementById('cartname');
@@ -196,32 +231,38 @@ $(document).ready(function() {
             addCartButton.prop('disabled', true);
         }
     }
-
-    function sendOrderToBack () {
-        $.ajax({
-        url: '/display_cart/' + userId,
-        type: 'POST',
-        contentType: 'application/json;charset=UTF-8',
-        data: JSON.stringify({ inchesDictionary: inchesDictionary }),
-        success: function (response) {
-            console.log('Inches Dictionary sent successfully');
-            console.log('Inches Dictionary:', inchesDictionary);
-            window.location.href = '/display_cart/' + userId;
-        },
-        error: function (error) {
-            console.error('Error sending data to server:', error);
-        }
-    });
-    }
+    
 
     async function updateServerOrders(inchesDictionary) {
+        let orderDatas;
+        for (const [productInches, value] of Object.entries(inchesDictionary)) { 
+            // Iterate over the inner dictionary
+            for (const [productGram, e] of Object.entries(value)) {
+                const productName = e['productName'];
+                const productPrice = e['productPrice'];
+                const productQuantity = e['quantity'];
+                const productTotal = e['total'];
+                const seller_id = e['sellerId'];
+        
+                // Create the orderData object
+                orderDatas = {
+                    'productInches': productInches,
+                    'productGram': productGram,
+                    'productName': productName,
+                    'productPrice': productPrice,
+                    'productQuantity': productQuantity,
+                    'productTotal': productTotal
+                };
+            }
+            }
+            console.log("oreders: ", orderDatas);
         try {
-            const response = await fetch(`/api/orders/${orderIds}`, {
+            const response = await fetch(`/orders/${orderId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ inchesDictionary }),
+                body: JSON.stringify({ orderDatas }),
             });
             const result = await response.json();
             console.log(result);
@@ -232,7 +273,7 @@ $(document).ready(function() {
 
     async function checkOrderExists(orderId) {
         try {
-            const response = await fetch(`/api/orders/${orderId}`, {
+            const response = await fetch(`/orders/${orderId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -240,8 +281,21 @@ $(document).ready(function() {
             });
 
             if (response.ok) {
-                // If the response is successful, the order exists
-                return true;
+                const orderDats = await response.json();
+                const responseProductInches = orderDats.productInches;
+                console.log("my inch:", responseProductInches)
+                
+                const { key: latestInches, value: latestEntry } = getLatestEntry(inchesDictionary);
+                console.log("my select:", latestInches);
+                // Check if responseProductInches exists in inchesDictionary
+                if (responseProductInches == latestInches) {
+                    // If it exists, return false (order already exists)
+                    console.log("they are the same");
+                    return true;
+                } else {
+                    // If it doesn't exist, return true (order doesn't exist)
+                    return false;
+                }
             } else {
                 // If the response is not successful, the order doesn't exist
                 return false;
@@ -251,5 +305,15 @@ $(document).ready(function() {
             return false;
         }
     }
+
+    function getLatestEntry(dictionary) {
+        const keys = Object.keys(dictionary);
+        const latestKey = keys[keys.length - 1];
+        const latestValue = dictionary[latestKey];
+        return { key: latestKey, value: latestValue };
+      }
+      // Example usage
+      const latestEntry = getLatestEntry(inchesDictionary);
+      console.log(latestEntry);
 
 });

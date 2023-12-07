@@ -73,8 +73,9 @@ class DBStorage:
         
     def get_user_by_id(self, cls, user_id):
         """Get a user by ID."""
-        if cls and cls in classes.values():
-            return self.__session.query(cls).get(user_id )
+        if cls:
+            if cls in classes.values():
+                return self.__session.query(cls).get(user_id )
         return None
     
     def get_orders_by_user_id(self, cls, user_id):

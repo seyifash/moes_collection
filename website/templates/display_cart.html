@@ -20,7 +20,7 @@
     </div>
     <div class="shopped-bag">
         <span class="shop-bag">MY SHOPPING BAG</span>
-        {% for order in orderData %}
+        {% for order in inchesDictionary %}
         <div class="order-details">
             <div class='name-details'>
                 <span class="inch-span">{{ order.productName }}</span>
@@ -44,6 +44,8 @@
             <div class="price-detail">
                 <span class="inch-span">Price</span>
                 <div class="p-tag">&#8358;{{ order.productPrice }}</div>
+            </div>
+            <div class="cancel-order"><span class="close">&times;</span>
             </div>
         </div>
         <div class="total-details">

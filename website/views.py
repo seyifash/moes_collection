@@ -32,40 +32,33 @@ def display_select(user_id):
 
 @views.route('/display_cart/<user_id>', methods=['GET', 'POST'])
 def display_cart(user_id):
-    orderData = [] 
-    if request.method == 'POST':
-        inchesDictionary = request.json.get('inchesDictionary')
-        # Initialize an empty dictionary
-
-        for key, value in inchesDictionary.items():
-            productInches = key
-            for l, e in value.items():
-                productGram = l
-                productName = e['productName']
-                productPrice = e['productPrice']
-                productQuantity = e['quantity']
-                productTotal = e['total']
-                seller_id = e['sellerId']
-                order_item = {
-                    'productInches': productInches,
-                    'productGram': productGram,
-                    'productName': productName,
-                    'productPrice': productPrice,
-                    'productQuantity': productQuantity,
-                    'productTotal': productTotal,
-                    'user_id': user_id,
-                    'seller_id': seller_id
-                }
-                orderData.append(order_item)
-        print('orderData:', orderData)
-        order_data_json = json.dumps(orderData)
-        session['orderData'] = order_data_json
-        print("Session keys:", session.keys())
-        print("Content from session:", session.get('content'))
-        print("OrderData from session:", session.get('orderData'))
-        return order_data_json
     
-    inchesDict = session.get('orderData')
-    print("the data: ".format(inchesDict))
-    return render_template('display_cart.html', inchesDict=inchesDict, user_id=user_id)
-        
+    if request.method == 'POST':
+        data = request.get_json()
+
+        # Extract values from the data
+        latestEntry = data.get('latestEntry')
+        productInches = data.get('latestInches')
+        for productGram, e in latestEntry.items():
+            productName = e['productName']
+            productPrice = e['productPrice']
+            productQuantity = e['quantity']
+            productTotal = e['total']
+            seller_id = e['sellerId']
+            orderData = {
+            'productInches': productInches,
+            'productGram': productGram,
+            'productName': productName,
+            'productPrice': productPrice,
+            'productQuantity': productQuantity,
+            'productTotal': productTotal,
+            'user_id': user_id,
+            'seller_id': seller_id
+            }
+            user_order = Order(**orderData)
+            user_order.save()
+        return jsonify(user_order.to_dict())
+    elif request.method == 'GET':
+        inchesDictionary = storage.get_orders_by_user_id(Order, user_id)
+        return render_template('display_cart.html', inchesDictionary=inchesDictionary, user_id=user_id)
+            
