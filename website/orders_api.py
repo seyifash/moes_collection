@@ -42,10 +42,13 @@ def Post_orders():
 @orders_api.route('/orders/<order_id>', methods=['PUT'], strict_slashes=False)
 def put_order(order_id):
     """update a order"""
+    
+    print(order_id)
     if not request.get_json():
         abort(400, description="Not a Json")
     order = storage.get_user_by_id(Order, order_id)
     if order is None:
+        print("order is none")
         abort(404)
     for key, value in request.get_json().items():
         if key not in ['id', 'created_at', 'updated_at', 'user_id', 'seller_id']:

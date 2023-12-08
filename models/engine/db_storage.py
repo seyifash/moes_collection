@@ -53,7 +53,8 @@ class DBStorage:
         
     def close(self):
         """removes a session"""
-        self.__session.remove()
+        if self.__session:
+            self.__session.remove()
         
     def count(self, cls=None):
         count = 0

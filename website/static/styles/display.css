@@ -35,6 +35,7 @@ nav {
     box-shadow: 5px 5px 5px rgb(248, 247, 247);
     position: fixed;
     top: 0%;
+    z-index: 1000;
 }
 label.logo {
     line-height: 70px;
@@ -42,7 +43,7 @@ label.logo {
     color: black;
     padding: 0 20px;
     font-weight: medium;
-    font-family: myFont3
+    font-family: myFont3;
 }
 nav ul {
     float: right;
@@ -392,6 +393,7 @@ p {
     border: 1px solid black;
     font-size: 20px;
     font-family: myFont5;
+    cursor: pointer;
 }
 .box-plus, .box-minus {
     display: flex;
@@ -406,9 +408,14 @@ p {
     border: none;
     margin-right: 5px;
     background-color: rgb(230, 227, 227);
+    cursor: pointer;
 }
 .box-minus {
     margin-left: 5px;
+}
+.box-plus:hover, .box-minus:hover, .box-quant:hover {
+    opacity: 0.4;
+    background: grey;
 }
 .p-tag {
     font-size: 25px;
@@ -563,6 +570,10 @@ p {
 .close {
     font-size: 45px;
     font-weight: 600;
+}
+.close:hover {
+    cursor: pointer;
+    color: rgb(240, 236, 236);
 }
 
 @media (max-width: 952px) {

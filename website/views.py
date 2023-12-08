@@ -1,10 +1,19 @@
 from flask import Blueprint, render_template, request, jsonify, session
 from models.order import Order
-import json
-
+from models.product import Product
 from models import storage
 
+
 views = Blueprint('views', __name__)
+
+@views.before_request
+def before_request():
+    storage.reload()  # Reload the database session before each request
+
+@views.teardown_request
+def teardown_request(exception=None):
+    storage.close()  # Close the database session after each request
+
 
 @views.route('/')
 def home():
@@ -16,19 +25,15 @@ def mainViews(user_id):
     products = storage.all("Product")
     return render_template("views.html", products=products, user_id=user_id)
 
-@views.route('/display_selects/<user_id>', methods=['GET', 'POST'])
-def display_select(user_id):
-    if request.method == 'POST':
-        # Get the JSON data from the request
-        json_data = request.get_json()
-        # Extract the content from the JSON data
-        content = json_data.get('content', {})
-        # Store the content in the session
-        session['content'] = content
-        return jsonify({'message': 'Content received successfully'})
+@views.route('/display_selects/<user_id>/<product_id>', methods=['GET'])
+def display_select(user_id, product_id):
+    current_product = storage.get_user_by_id(Product, product_id)
+    current_product.productImage = current_product.productImage.replace('\\', '/')
+    current_product.productImage = current_product.productImage.split('website/static/', 1)[-1]
+    current_product.productImage = current_product.productImage.replace('\\', '/')
+    print("image path: {}".format(current_product.productImage))
     
-    content_from_session = session.get('content', {})
-    return render_template('display.html', user_id=user_id, contents=content_from_session)
+    return render_template('display.html', user_id=user_id, content=current_product)
 
 @views.route('/display_cart/<user_id>', methods=['GET', 'POST'])
 def display_cart(user_id):
@@ -44,7 +49,8 @@ def display_cart(user_id):
             productPrice = e['productPrice']
             productQuantity = e['quantity']
             productTotal = e['total']
-            seller_id = e['sellerId']
+            seller_id = e['seller_id']
+            product_id = e['product_id']
             orderData = {
             'productInches': productInches,
             'productGram': productGram,
@@ -53,7 +59,8 @@ def display_cart(user_id):
             'productQuantity': productQuantity,
             'productTotal': productTotal,
             'user_id': user_id,
-            'seller_id': seller_id
+            'seller_id': seller_id,
+            'product_id': product_id
             }
             user_order = Order(**orderData)
             user_order.save()
@@ -61,4 +68,6 @@ def display_cart(user_id):
     elif request.method == 'GET':
         inchesDictionary = storage.get_orders_by_user_id(Order, user_id)
         return render_template('display_cart.html', inchesDictionary=inchesDictionary, user_id=user_id)
+    
+
             

@@ -13,3 +13,4 @@ class Order(BaseModel, Base):
     productTotal = Column(Integer, nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     seller_id = Column(String(60), ForeignKey('seller.id'), nullable=False)
+    product_id = Column(String(60), ForeignKey('product.id'), nullable=False)

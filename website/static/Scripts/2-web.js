@@ -3,55 +3,21 @@ $(document).ready(function() {
 
     $('.carry_all').on('click', function() {
         // Extract information from the clicked carry_all div
-        const sellerId = $(this).data('product-id');
-        const imageSrc = $(this).find('.hair').attr('src');
-        const productName = $(this).find('.content-sp:nth-child(1)').text().replace('Name: ', '');
-        const productInches = $(this).find('.content-sp:nth-child(2)').text().replace('Inches: ', '');
-        const productQuantity = $(this).find('.content-sp:nth-child(3)').text().replace('Gram: ', '');
-        const productColor = $(this).find('.content-sp:nth-child(4)').text().replace('Colors: ', '');
-        const productPrice = $(this).find('.content-sp:nth-child(5)').text().replace('Price: ', '');
-        const productPricePerInch = $(this).find('.content-sp:nth-child(6)').text().replace('Price by Inch: ', '');
-        const inchesAboveTwenty = $(this).find('.content-sp:nth-child(7)').text().replace('Price Inches Above Twenty: ', '');
-
-        // Create a dictionary with the extracted information
-        const productInfo = {
-            'imageSrc': imageSrc,
-            'productName': productName,
-            'productInches': productInches,
-            'productQuantity': productQuantity,
-            'productColor': productColor,
-            'productPrice': productPrice,
-            'sellerId': sellerId,
-            'productPricePerInch': productPricePerInch,
-            'inchesAboveTwenty': inchesAboveTwenty
-        };
-
-        // Do something with the productInfo dictionary
-        console.log(productInfo);
-
-
-        // Send data as a POST request
-        $.ajax({
-            url: '/display_selects/' + userId,
-            type: 'POST',
-            contentType: 'application/json;charset=UTF-8',
-            data: JSON.stringify({ content: productInfo }),
-            success: function(response) {
-                window.location.href = '/display_selects/' + userId
-                console.log('sellerid:' , sellerId);
-            },
-            error: function(error) {
-                console.error('Error sending data to server:', error);
-            }
+        const sellerId = $(this).data('product-seller-id');
+        const productId = $(this).data('product-id');
+        console.log(userId);
+        console.log(productId);
+        window.location.href = `/display_selects/${userId}/${productId}`;
     });
-});
-    
+
+
     //a variable to store the selected inches as well as gram value
     let selectedInches = null;
     let gramValue = null;
-    
     // Initialize an object variable to store quantity and inches 
     const inchesDictionary = {};
+
+
     // Function to handle inch selection
     $('.inche').on('click', function() {
         // Update the selectedInches variable
@@ -63,6 +29,7 @@ $(document).ready(function() {
         updateAddCartButton();
     });
 
+    //on click function
     $('#numberInput').on('keydown', function(event) {
         // Check if the pressed key is Enter (key code 13)
         if (event.keyCode === 13) {
@@ -71,6 +38,8 @@ $(document).ready(function() {
         }
     });
 
+
+    // onclick function
     $('.the-butt').on('click', function() {
         // Read the value from the input field
         gramValue = $('#numberInput').val();
@@ -80,10 +49,13 @@ $(document).ready(function() {
         updateAddCartButton();
     });
 
-   
 
+    //function
     // Set up click event for add-cart button
     const addCartButton = $('.add-cart').prop('disabled', true).on('click', async function() {
+
+        // Get the product id and the sellers id
+        let product_id = $('#capturedContent').data('product-id1');
         // Get product name and price from the span tags
         const productName = $('.price_name').text().trim(); 
         // product price
@@ -98,7 +70,7 @@ $(document).ready(function() {
         const aboveTwentyText = $('.inche_Above_Twenty').text().trim().replace(/\s+/g, ' ');
         const aboveTwentyMatch = aboveTwentyText.match(/(\d+(\.\d+)?)/);
         const inchesAboveTwenty = aboveTwentyMatch ? parseInt(aboveTwentyMatch[1]) : 0; 
-        let sellerId = $('.carry_not').data('seller-id');
+        let seller_id = $('.carry_not').data('seller-id');
 
         // Check if both inch and gram are selected
         if (selectedInches !== null && gramValue !== null) {
@@ -108,7 +80,8 @@ $(document).ready(function() {
                     productName: productName,
                     productPrice: productPrice,
                     total: 0,
-                    sellerId: sellerId
+                    seller_id: seller_id,
+                    product_id: product_id
                 };
             }
 
@@ -134,7 +107,8 @@ $(document).ready(function() {
         }
         
         console.log('Inches Dictionary:', inchesDictionary);
-        console.log('sellerid:' , sellerId);
+        console.log('sellerid:' , seller_id);
+        console.log('product_id: ', product_id)
 
 
         updateAddCartButton();
@@ -155,6 +129,10 @@ $(document).ready(function() {
 
         }
     });
+
+
+    //funtion 2
+
     let orderId;
     function sendOrderToBack () {
         const { key: latestInches, value: latestEntry } = getLatestEntry(inchesDictionary);
@@ -182,6 +160,8 @@ $(document).ready(function() {
     });
     }
 
+
+    // funtion 
     function updateCartOverlay() {
         let proName = document.getElementById('cartname');
         let proPrice = document.getElementById('cartprice');
@@ -216,10 +196,11 @@ $(document).ready(function() {
     
         // Hide the cart overlay after 4 seconds
         setTimeout(function () {
-            document.getElementById('cart-overlay').style.display = 'none';
+        document.getElementById('cart-overlay').style.display = 'none';
         }, 4000);
     }
     
+
     // Function to enable or disable the add-cart button based on inch selection
     function updateAddCartButton() {
         // Check if an inch is selected
@@ -233,6 +214,94 @@ $(document).ready(function() {
     }
     
 
+    // on click function
+    $('.order-div').on('click', '.box-plus, .box-minus',  function () {
+        event.stopPropagation();
+        
+            let productElement = $(this).siblings('.box-quant');
+            let orderDiv = $(this).closest('.order-div');
+            let orderIds = orderDiv.data('order-id');
+            let subbText = orderDiv.find(`.subb[data-order-ids="${orderIds}"]`);
+
+            console.log('subbText:', subbText);
+            console.log('subbText type:', typeof subbText);
+            let totalPriceWithoutSymbol = subbText.text().replace(/₦/g, ''); 
+            console.log(totalPriceWithoutSymbol);
+            let aggPrice = parseInt(totalPriceWithoutSymbol, 10);
+            
+            let productInt = parseInt(productElement.text(), 10);
+
+            let direction = $(this).hasClass('box-plus') ? 1 : -1;
+
+            let  productQuantity = Math.max(productInt + direction, 0);
+
+            productElement.text(productQuantity);
+            let tempPrice = aggPrice / productInt;
+            let productTotal = tempPrice *  productQuantity;
+            subbText.text('₦' + productTotal);
+
+            let orderId = $(this).closest('.order-div').data('order-id');
+            console.log(productQuantity);
+            console.log(productTotal);
+
+            console.log(orderId);
+
+            $.ajax({
+                url: '/orders/' + orderId,
+                method: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify({ productQuantity: productQuantity, productTotal: productTotal }),
+                success: function (data) {
+                    // Handle success if needed
+                    console.log('Quantity updated successfully');
+                },
+                error: function (error) {
+                    // Handle error if needed
+                    console.error('Error updating quantity:', error);
+                }
+            });
+
+        });
+
+    // function to delete order
+
+    $('.order-div').on('click', '.cancel-order', function (event) {
+        // Stop event propagation to prevent multiple triggers
+        event.stopPropagation();
+
+        // Find the closest parent with the order-id data attribute
+        var orderId = $(this).closest('.order-div').data('order-id');
+        
+        // Make an AJAX request to delete the order
+        $.ajax({
+            url: '/orders/' + orderId,
+            method: 'DELETE',
+            success: function (data) {
+                // Handle success if needed
+
+                // Remove the corresponding HTML element
+                removeOrderDiv(orderId);
+                console.log('Order canceled successfully');
+            },
+            error: function (error) {
+                // Handle error if needed
+                console.error('Error canceling order:', error);
+            }
+        });
+    });
+
+    //another functtion 
+
+    function removeOrderDiv(orderId) {
+        // Find the corresponding order-div using the data attribute
+        var orderDiv = $('.order-div[data-order-id="' + orderId + '"]');
+        
+        // Remove the order-div from the DOM
+        orderDiv.remove();
+    }
+
+    // funtion
+    
     async function updateServerOrders(inchesDictionary) {
         let orderDatas;
         for (const [productInches, value] of Object.entries(inchesDictionary)) { 
@@ -271,6 +340,8 @@ $(document).ready(function() {
         }
     }
 
+    
+    // function
     async function checkOrderExists(orderId) {
         try {
             const response = await fetch(`/orders/${orderId}`, {
@@ -287,17 +358,13 @@ $(document).ready(function() {
                 
                 const { key: latestInches, value: latestEntry } = getLatestEntry(inchesDictionary);
                 console.log("my select:", latestInches);
-                // Check if responseProductInches exists in inchesDictionary
                 if (responseProductInches == latestInches) {
-                    // If it exists, return false (order already exists)
                     console.log("they are the same");
                     return true;
                 } else {
-                    // If it doesn't exist, return true (order doesn't exist)
                     return false;
                 }
             } else {
-                // If the response is not successful, the order doesn't exist
                 return false;
             }
         } catch (error) {
@@ -306,14 +373,13 @@ $(document).ready(function() {
         }
     }
 
+
+    // function
     function getLatestEntry(dictionary) {
         const keys = Object.keys(dictionary);
         const latestKey = keys[keys.length - 1];
         const latestValue = dictionary[latestKey];
         return { key: latestKey, value: latestValue };
-      }
-      // Example usage
-      const latestEntry = getLatestEntry(inchesDictionary);
-      console.log(latestEntry);
+        }
 
 });

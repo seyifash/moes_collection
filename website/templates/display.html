@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hairs and Prices</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/display.css') }}">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="../static/styles/display.css">
     <script>var userId = "{{ user_id }}";</script>
-    <script src="../static/scripts/2-web.js"></script>
+    <script src="{{ url_for('static', filename='Scripts/2-web.js') }}"></script>
 </head>
 <body>
     <nav>  
@@ -18,14 +18,14 @@
         </label>
         <label class="logo"><i>M</i>o<i>ES</i> <i>C</i>o<i>ll</i>ectio<i>N</i></label>
         <ul>
-            <li><a class="active" href="/display_cart/{{ user_id }}"><img src="../static/images/shopping-bag.png" style="margin-right: 5px;">Bag</a></li>  
+            <li><a class="active" href="/display_cart/{{ user_id }}"><img src="{{ url_for('static', filename='images/shopping-bag.png') }}" style="margin-right: 5px;">Bag</a></li>  
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
-        <div id="capturedContent" class="all-div">
-            <div class="carry_not" data-seller-id="{{ contents.sellerId }}">
+        <div id="capturedContent" class="all-div" data-product-id1="{{ content.id }}">
+            <div class="carry_not" data-seller-id="{{ content.seller_id }}">
                 <div class="carry_img">
-                    <img class="hair" src="{{ contents.imageSrc }}">
+                    <img class="hair" src="{{ url_for('static', filename=content.productImage) }}">   
                 </div>
             </div>
             <div class="overall">
@@ -35,10 +35,10 @@
                 </div>
                 <div class="name_price">
                     <span class="price_name">
-                        {{ contents.productName }}
+                        {{ content.productName }}
                     </span>
                     <span class="price">
-                        &#8358;{{ contents.productPrice}}
+                        &#8358;{{ content.productPrice}}
                     </span>
                 </div>
                 <div class="the_cal">
@@ -59,13 +59,13 @@
                 <div class="price-tag">
                 <button class="chart">INCHES CHART </button>
                 <span class="price_per_inch">
-                    Inches below Twenty: &#8358;{{ contents.productPricePerInch }}
+                    Inches below Twenty: &#8358;{{ content.productPricePerInch }}
                 </span>
                 <span class="inche_Above_Twenty">
-                    Inches above Twenty: &#8358;{{ contents.inchesAboveTwenty }}
+                    Inches above Twenty: &#8358;{{ content.inchesAboveTwenty }}
                 </span>
                 </div>
-                <p class="model-wears"> Our model wears a {{ contents.productInches }} inches {{ contents.productName }} hair </p>
+                <p class="model-wears"> Our model wears a {{ content.productInches }} inches {{ content.productName }} hair </p>
                     <div class="for_gram">
                         <label for="numberInput">Gram: </label>
                             <input id="numberInput" name="numberInput">
@@ -82,7 +82,7 @@
             <div class="cart-overit">
                 <div class="cart-pics-name">
                     <div class="cart_img">
-                        <img class="cart-pics" src="../static/images/orange.jpg">
+                        <img class="cart-pics" src="{{ url_for('static', filename=content.productImage) }}">
                     </div>
                     <div class="cart-namep">
                         <span class="cartname" id="cartname"></span>

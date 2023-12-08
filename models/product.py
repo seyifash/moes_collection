@@ -15,3 +15,5 @@ class Product(BaseModel, Base):
     productPricePerInch = Column(Integer, nullable=False)
     inchesAboveTwenty = Column(Integer, nullable=False)
     seller_id = Column(String(60), ForeignKey('seller.id'), nullable=False)
+    orders = relationship('Order', backref='product')
+
