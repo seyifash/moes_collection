@@ -22,7 +22,7 @@
             <span class="shop-bag">MY SHOPPING BAG</span>
         </div>
         {% for order in inchesDictionary %}
-        <div class="order-div" data-order-id="{{ order.id}}" data-product-id2="{{ order.product_id }}" >
+        <div class="order-div" data-order-id="{{ order.id}}" data-product-id="{{ order.product_id }}" >
             <div class="order-details" >
                 <div class='name-details'>
                     <span class="inch-span">{{ order.productName }}</span>
@@ -47,10 +47,10 @@
                     <span class="inch-span">Price</span>
                     <div class="p-tag">&#8358;{{ order.productPrice }}</div>
                 </div>
-                <div class="cancel-order"><span class="close">&times;</span></div>
+                <div class="cancel-order"><span data-id-order="{{ order.id}}" class="close">&times;</span></div>
             </div>
             <div class="total-details">
-                <div class="sub-total">SubTotal <span class="sub">&#8358;{{ order.productTotal }}</span></div>
+                <div class="sub-total">SubTotal <span class="sub" data-order-ids="{{ order.id}}">&#8358;{{ order.productTotal }}</span></div>
                 <div class="tot">Total<span class="exclu">&#40;Excl delivery&#41;</span> <span  data-order-ids="{{ order.id}}" class="subb">&#8358;{{ order.productTotal }}</span></div>
                 <button class="check-outtotal">checkout</button>
             </div>

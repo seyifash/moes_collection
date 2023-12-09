@@ -217,35 +217,41 @@ $(document).ready(function() {
     // on click function
     $('.order-div').on('click', '.box-plus, .box-minus',  function () {
         event.stopPropagation();
-        
+
             let productElement = $(this).siblings('.box-quant');
             let orderDiv = $(this).closest('.order-div');
+
             let orderIds = orderDiv.data('order-id');
             let subbText = orderDiv.find(`.subb[data-order-ids="${orderIds}"]`);
+            let text = orderDiv.find(`.sub[data-order-ids="${orderIds}"]`);
 
-            console.log('subbText:', subbText);
-            console.log('subbText type:', typeof subbText);
-            let totalPriceWithoutSymbol = subbText.text().replace(/₦/g, ''); 
-            console.log(totalPriceWithoutSymbol);
+
+            console.log('subbText:', subbText.text());
+            console.log('Text:', text.text());
+            var totalPriceWithoutSymbol = subbText.text().replace(/₦/g, '');
+            let textWithoutSymbol = text.text().replace(/₦/g, '');
+            console.log('totalPriceWithoutSymbol:', totalPriceWithoutSymbol);
+            console.log('textWithoutSymbol:', textWithoutSymbol);
+
             let aggPrice = parseInt(totalPriceWithoutSymbol, 10);
-            
             let productInt = parseInt(productElement.text(), 10);
-
             let direction = $(this).hasClass('box-plus') ? 1 : -1;
-
-            let  productQuantity = Math.max(productInt + direction, 0);
+            let productQuantity = Math.max(productInt + direction, 0);
 
             productElement.text(productQuantity);
+
             let tempPrice = aggPrice / productInt;
-            let productTotal = tempPrice *  productQuantity;
+            productTotal = tempPrice * productQuantity;
+
             subbText.text('₦' + productTotal);
+            text.text('₦' + productTotal);
+
+            console.log('productQuantity:', productQuantity);
+            console.log('totalPrice:', productTotal );
+            console.log('orderIds:', orderIds);
 
             let orderId = $(this).closest('.order-div').data('order-id');
-            console.log(productQuantity);
-            console.log(productTotal);
-
-            console.log(orderId);
-
+            console.log('orderId:', orderId);
             $.ajax({
                 url: '/orders/' + orderId,
                 method: 'PUT',
@@ -264,36 +270,34 @@ $(document).ready(function() {
         });
 
     // function to delete order
-
     $('.order-div').on('click', '.cancel-order', function (event) {
         // Stop event propagation to prevent multiple triggers
         event.stopPropagation();
 
-        // Find the closest parent with the order-id data attribute
+        // Find the closest parent with the data-order-ids attribute
         var orderId = $(this).closest('.order-div').data('order-id');
-        
+    
         // Make an AJAX request to delete the order
         $.ajax({
             url: '/orders/' + orderId,
             method: 'DELETE',
             success: function (data) {
-                // Handle success if needed
-
-                // Remove the corresponding HTML element
-                removeOrderDiv(orderId);
                 console.log('Order canceled successfully');
+                removeOrderDiv(orderId);
             },
             error: function (error) {
                 // Handle error if needed
                 console.error('Error canceling order:', error);
             }
         });
+       
     });
 
     //another functtion 
 
     function removeOrderDiv(orderId) {
         // Find the corresponding order-div using the data attribute
+
         var orderDiv = $('.order-div[data-order-id="' + orderId + '"]');
         
         // Remove the order-div from the DOM
